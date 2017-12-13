@@ -61,10 +61,17 @@ h6 {
 .show-third {
     opacity: 0;
     transition: opacity .6s ease-out;
+    transition-delay: 1.5s;
+}
+
+.show-fourth {
+    opacity: 0;
+    transition: opacity .6s ease-out;
     transition-delay: 2s;
 }
 
-body.fade-in .show-first, body.fade-in .show-second, body.fade-in .show-third {
+body.fade-in .show-first, body.fade-in .show-second, body.fade-in .show-third, body.fade-in .show-fourth {
     opacity: 1;
 }
+
 
