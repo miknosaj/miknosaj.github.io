@@ -47,18 +47,24 @@ h6 {
   font-family: 'Cinetype-Bold', helvetica, arial, sans-serif;
 }
 
-.hide-on-load {
-    opacity: 0;
-    transition: opacity .6s ease-out;
-    transition-delay: 1s;
-}
-
 .show-first {
     opacity: 0;
     transition: opacity .6s ease-out;
 }
 
-body.fade-in .hide-on-load, body.fade-in .show-first {
+.show-second {
+    opacity: 0;
+    transition: opacity .6s ease-out;
+    transition-delay: 1s;
+}
+
+.show-third {
+    opacity: 0;
+    transition: opacity .6s ease-out;
+    transition-delay: 2s;
+}
+
+body.fade-in .show-first, body.fade-in .show-second, body.fade-in .show-third {
     opacity: 1;
 }
 
