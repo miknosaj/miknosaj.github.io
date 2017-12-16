@@ -74,4 +74,28 @@ body.fade-in .show-first, body.fade-in .show-second, body.fade-in .show-third, b
     opacity: 1;
 }
 
+.text-marquee div { 
+  /*-webkit-transform: translateX( -70% ); 
+  transform: translateX( -70% ); */
+  background: linear-gradient(to right, white, black)
+}
 
+.gradient-box {
+  height: 20px;
+  background: linear-gradient(to right, white, black)
+}
+
+.f-headliner { font-size: 30vw; }
+.f-headliner-ns { font-size: 20vw; }
+
+$color1: white;
+$color2: black;
+
+.gradient {
+  background: linear-gradient(120deg, black 0%, white 30%, white 45%, black 100%) repeat;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  
+  background-position: 0;
+  background-size: 100%;
+}
