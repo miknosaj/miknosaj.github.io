@@ -84,5 +84,4 @@ body.fade-in .show-first, body.fade-in .show-second, body.fade-in .show-third, b
 .f-headliner { font-size: 30vw; }
 .f-headliner-ns { font-size: 20vw; }
 
-.text-marquee div { -webkit-transform: translateX( -70% ); transform: translateX( -70% ); }
 
