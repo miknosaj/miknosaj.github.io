@@ -37,6 +37,7 @@ body.fade-in .show-first, body.fade-in .show-second, body.fade-in .show-third, b
 		1px -1px 0 #ffffff,
 		-1px 1px 0 #ffffff,
 		1px 1px 0 #ffffff;
+    
 }
 
 .f-headliner { font-size: 30vw; }
@@ -52,7 +53,7 @@ body.fade-in .show-first, body.fade-in .show-second, body.fade-in .show-third, b
 				-webkit-transform: rotate(0deg);
 		}
 		50% {
-				-webkit-transform: rotate(7deg);
+				-webkit-transform: rotate(10deg);
 		}
 		100% {
 					-webkit-transform: rotate(0deg);

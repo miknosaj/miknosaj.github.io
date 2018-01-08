@@ -21,7 +21,7 @@ if ("ontouchstart" in document.documentElement) {
         // x and y to [0,6]
         y += 6;
 
-        document.getElementById('marquee').style.transform = "translateX(" + (y-150) + "%) skewX(" + (x-50) + "deg)"
+        document.getElementById('banner').style.transform = "translateX(" + (y-150) + "%) skewX(" + (x-50) + "deg)"
     }
     window.addEventListener('deviceorientation', handleOrientation);
 } else {
@@ -36,7 +36,7 @@ if ("ontouchstart" in document.documentElement) {
         var mouseXLast = mouseX / 25 + 50;
         var mouseYLast = mouseY / 25;
 
-        document.getElementById('marquee').style.transform = "translateX(-" + mouseXLast + "%) skewX(" + (mouseYLast-20) + "deg)"
+        document.getElementById('banner').style.transform = "translateX(-" + mouseXLast + "%) skewX(" + (mouseYLast-20) + "deg)"
         return true;
     }
 }
