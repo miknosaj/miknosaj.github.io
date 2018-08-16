@@ -3,7 +3,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Jason Kim - Acaia</title>
+  <title>Jason Kim - Medialets</title>
   <link rel="stylesheet" href="https://unpkg.com/tachyons@4.6.1/css/tachyons.min.css"/>
   <link rel="stylesheet" href="../css/custom.css"/>
   <link rel="apple-touch-icon" sizes="152x152" href="../favicons/apple-touch-icon.png?v=2">
@@ -63,13 +63,74 @@
         Understand
       </h1>
       <h2 class="f3 mid-gray lh-title">
-        How I designed the Report Builder and Alerts features for the Servo platform.
+        A solution can only be as good as the understanding of the problem.
       </h2>
     </div>
     <div class="show-second fn fl-ns w-70-l w-50-ns mb5">
       <p class="f5 lh-copy measure mt0">
-        Medialets is a recently acquired GroupM company focused on innovation in mobile ad serving and measurement.
+        It was crucial for me to understand the background of our products and its various stakeholders across the departments to better understand our industry, clients, and users. I used these insights to answer several important questions.
       </p>
+      <div class="dib">
+        <div class="w-50-l fn fl-ns pr4-ns">
+          <p class="f5 lh-copy measure bb mt4">
+            What is Report Builder?
+          </p>
+          <p class="f5 lh-copy measure mt0">
+            Report Builder is an interactive tool for our clients to have complete control over their campaign reports. The Report Builder is composed of three parts: The FDM (Filters Dimensions, and Metrics), the workspace (where the users drag and drop the FDM tiles), and a preview of what the report will look like.
+          </p>
+          <div class="w-100 pr4-l">
+            <div class="fs4 f4 f1-ns measure-narrow mv4 mt0-ns"><div class="aspect-ratio aspect-ratio--16x9">
+              <span style="background-image:url(../img/reportbuildergif.gif);" class="cover bg-center aspect-ratio--object"></span>
+            </div></div>
+          </div>
+        </div>
+        <div class="w-50-l fn fl-ns">
+          <p class="f5 lh-copy measure bb mt4">
+            🔑 Findings for Report Builder:
+          </p>
+          <ul class="f5 lh-copy measure">
+            <li>There are constraints that have not been built into the workflow which means that users will make many accidents and face a lot of error messages. (like Filters being set before Dimensions and Metrics)</li>
+            <li>The hierarchical structure between Filters, Dimensions, and Metrics is not visualized as they all are represented similarly in the UI.</li>
+            <li>The drag and drop interaction, while great for customizability, demands too much motion from the users as they go through many Filters, Dimensions, and Metrics.</li>
+            <li>Users are not able to take full advantage of how their spreadsheets would be formatted as the spreadsheet visualization is simply a preview.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="dib">
+        <div class="w-50-l fn fl-ns pr4-ns">
+          <p class="f5 lh-copy measure bb mt4">
+            What is Servo Alerts?
+          </p>
+          <p class="f5 lh-copy measure mt0">
+            Servo Alerts is how our clients are alerted of any unexpected behaviour within their campaigns. Alerts would be sent to the client's emails.
+          </p>
+          <div class="w-100 pr4-l">
+            <div class="fs4 f4 f1-ns measure-narrow mv4 mt0-ns"><div class="aspect-ratio aspect-ratio--16x9">
+              <span style="background-image:url(../img/alerts.png);" class="cover bg-center aspect-ratio--object"></span>
+            </div></div>
+          </div>
+        </div>
+        <div class="w-50-l fn fl-ns">
+          <p class="f5 lh-copy measure bb mt4">
+            🔑 Findings for Alerts:
+          </p>
+          <ul class="f5 lh-copy measure">
+            <li>Alerts are sent by email and only by email.</li>
+            <li>Specific alerts were sent as a spreadsheet style document making it hard to read and quickly interpret at times.</li>
+            <li>Too much information is being told even though there is an identifiable pattern.</li>
+          </ul>
+        </div>
+      </div>
+      <p class="f5 lh-copy measure bb mt4">
+        Who are the users?
+      </p>
+      <p class="f5 lh-copy measure mt0">
+        The users are ad operation teams who manage and report on the performance of their online (mobile, in our case) advertisements.
+      </p>
+      <p class="f5 lh-copy measure mt0">
+        Our platform's users are people who know exactly what they want out of a campaign and what variables they need to leverage in order to achieve their campaign goals.
+      </p>
+
     </div>
 
 
