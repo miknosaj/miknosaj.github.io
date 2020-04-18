@@ -6,13 +6,13 @@
 .show-second {
     opacity: 0;
     transition: opacity .6s ease-out;
-    transition-delay: 1s;
+    transition-delay: .5s;
 }
 
 .show-third {
     opacity: 0;
     transition: opacity .6s ease-out;
-    transition-delay: 1.5s;
+    transition-delay: 1s;
 }
 
 .show-fourth {
