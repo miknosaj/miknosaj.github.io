@@ -25,19 +25,19 @@ body.fade-in .show-first, body.fade-in .show-second, body.fade-in .show-third, b
     opacity: 1;
 }
 
-.text-banner div { 
-  -webkit-transform: translateX( -70% ); 
-  transform: translateX( -70% ); 
+.text-banner div {
+  -webkit-transform: translateX( -70% );
+  transform: translateX( -70% );
 }
 
-#banner {
+#headline {
   color: black;
   text-shadow:
-		-1px -1px 0 #ffffff,
-		1px -1px 0 #ffffff,
-		-1px 1px 0 #ffffff,
-		1px 1px 0 #ffffff;
-    
+		-0.5px -0.5px 0 #ffffff,
+		0.5px -0.5px 0 #ffffff,
+		-0.5px 0.5px 0 #ffffff,
+		0.5px 0.5px 0 #ffffff;
+
 }
 
 .f-headliner { font-size: 30vw; }
@@ -53,10 +53,9 @@ body.fade-in .show-first, body.fade-in .show-second, body.fade-in .show-third, b
 				-webkit-transform: rotate(0deg);
 		}
 		50% {
-				-webkit-transform: rotate(10deg);
+				-webkit-transform: rotate(15deg);
 		}
 		100% {
 					-webkit-transform: rotate(0deg);
 			}
 }
-
