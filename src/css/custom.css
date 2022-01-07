@@ -34,6 +34,11 @@ body.fade-in .show {
   background-color: white;
 }
 
+.face {
+  height: 50px;
+  width: 50px;
+}
+
 .hole-bar {
   width: 112px;
 }
