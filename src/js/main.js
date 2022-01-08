@@ -1,7 +1,8 @@
 var body = document.getElementsByTagName("body")[0];
 
-var fadeIn = () => {
+var init = () => {
   body.classList.add("fade-in");
+  body.classList.add("slide-up");
 };
 
-window.onload = fadeIn;
+window.onload = init;
