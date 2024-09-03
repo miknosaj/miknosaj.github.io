@@ -1,176 +1,58 @@
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jason Kim</title>
-    <link rel="stylesheet" href="/src/css/tachyons.css" />
-    <link rel="stylesheet" href="/src/css/custom.css" />
+    <link rel="stylesheet" href="styles.css">
     <link
-      rel="apple-touch-icon"
-      sizes="152x152"
-      href="/src/favicons/apple-touch-icon.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      href="/src/favicons/favicon-32x32.png"
-      sizes="32x32"
+        rel="apple-touch-icon"
+        sizes="152x152"
+        href="favicon/apple-touch-icon.png"
     />
     <link
-      rel="icon"
-      type="image/png"
-      href="/src/favicons/favicon-16x16.png"
-      sizes="16x16"
+        rel="icon"
+        type="image/png"
+        href="favicon/favicon-32x32.png"
+        sizes="32x32"
     />
-    <link rel="shortcut icon" href="/src/favicons/favicon.ico?v=2" />
-    <meta name="msapplication-config" content="/src/favicons/browserconfig.xml" />
-    <meta property="og:locale" content="en_US" />
-    <meta property="og:type" content="article" />
-    <meta property="og:title" content="Jason Kim" />
-    <meta
-      property="og:description"
-      content="Product Designer"
+    <link
+        rel="icon"
+        type="image/png"
+        href="favicon/favicon-16x16.png"
+        sizes="16x16"
     />
-    <meta property="og:url" content="http://jasonkim.xyz/" />
-    <meta property="og:site_name" content="Jason Kim" />
-    <meta property="og:image" content="/src/img/kimjson.png" />
-  </head>
+</head>
 
-  <body class="bit-sans background">
-    <! –– Notebook paper ––>
-    <main class="show slideup flex mt3 mb5 mv4-ns ml6-l mh2 mh3-m br4 bg-white mw7">
-      <! –– Hole punches on the left. Only for large and medium screens. ––>
-      <div class="center flex-ns flex-column justify-between hole-bar br bw1 b--moon-gray dn">
-        <div class="hole background mt5 center"></div>
-        <div class="hole background center"></div>
-        <div class="hole background mb5 center"></div>
-      </div>
-
-      <! –– Content Section ––>
-      <div class="flex flex-column w-100">
-
-        <! –– Hole punches on top. For small screens only. ––>
-        <div class="bb bw1 b--moon-gray dn-ns">
-          <div class="flex justify-between ph4 pb3">
-              <div>
-                  <img src="/src/img/notepad-hole.svg" alt="My Happy SVG"/>
-              </div>
-              <div>
-                  <img src="/src/img/notepad-hole.svg" alt="My Happy SVG"/>
-              </div>
-              <div>
-                  <img src="/src/img/notepad-hole.svg" alt="My Happy SVG"/>
-              </div>
-              <div>
-                  <img src="/src/img/notepad-hole.svg" alt="My Happy SVG"/>
-              </div>
-              <div>
-                  <img src="/src/img/notepad-hole.svg" alt="My Happy SVG"/>
-              </div>
-              <div>
-                  <img src="/src/img/notepad-hole.svg" alt="My Happy SVG"/>
-              </div>
-              <div>
-                  <img src="/src/img/notepad-hole.svg" alt="My Happy SVG"/>
-              </div>
-          </div>
-        </div>
-
-        <! –– Nav Links ––>
-        <div class="bb bw1 b--moon-gray">
-          <div class="flex justify-between items-center ph4 pv1">
-            <h1 class="f2-ns f3">kim.json</h1>
-            <h1 class="f2-ns f3 underline"><a href="https://jasonkim.xyz/portfolio" class="black dim underline">portfolio ↗</a></h1>
-          </div>
-        </div>
-
-        <! –– Hero ––>
-        <div class="bb bw1 b--moon-gray">
-          <div class="ph4 pt2-l pt4-m pt3 pb1">
-            <div class="bold bit-serif f1 f-headline-l">
-              Jason Kim
+<body>
+    <div class="terminal">
+        <section>
+            <div class="header-content">
+                <pre class="output">JASON KIM</pre>
+                <pre class="output location-time">NYC <span id="current-time"></span></pre>
             </div>
-            <h1 class="f2-ns f3 lh-solid">
-              Senior Product Designer at <a href="https://www.pilot.com/" class="black dim underline">Pilot</a>
-            </h1>
-          </div>
-        </div>
+            <span>jasonkim@web ~ % ls -l</span>
+            <ul id="directory">
+                <li><a href="#" class="file" data-file="PROFILE"><span class="file-name"><span class="file-name-text">PROFILE</span><span class="file-name-ext">TXT</span></span></a></li>
+                <li><a href="#" class="file" data-file="HISTORY"><span class="file-name"><span class="file-name-text">HISTORY</span><span class="file-name-ext">TXT</span></span></a></li>
+                <li><a href="#" class="file" data-file="RESUME"><span class="file-name"><span class="file-name-text">RESUME</span><span class="file-name-ext">PDF</span></span></a></li>
+                <li><a href="#" class="file" data-file="CONTACT"><span class="file-name"><span class="file-name-text">CONTACT</span><span class="file-name-ext">TXT</span></span></a></li>
+            </ul>
+        </section>
 
-        <! –– Tagline ––>
-        <div class="bb bw1 b--moon-gray">
-          <div class=" ph4 pv2-ns pv1">
-            <h1 class="f2-ns f3 lh-solid">
-              Building <mark>thoughtful</mark> products,
-            </br>one <mark>honest</mark> conversation at a time.
-            </h1>
-          </div>
-        </div>
-      
-        <! –– Pilot ––>
-        <div class="bb bw1 b--moon-gray">
-          <div class="flex justify-between items-center  ph4 pv1
-          ">
-            <h1 class="f2-ns f3"><a href="https://www.pilot.com/" class="black dim underline">Pilot ↗</a></h1>
-            <h1 class="bit-serif f3-ns f4">2022 — Present</h1>
-          </div>
-        </div>
-      
-        <! –– HYPR ––>
-        <div class="bb bw1 b--moon-gray">
-          <div class="flex justify-between items-center  ph4 pv1
-          ">
-            <h1 class="f2-ns f3"><a href="https://www.hypr.com/" class="black dim underline">HYPR ↗</a></h1>
-            <h1 class="bit-serif f3-ns f4">2021 — 2022</h1>
-          </div>
-        </div>
+        <main>
+            <p class="command">cat <span id="current-file">PROFILE.TXT</span></p>
+            <pre id="file-content" class="output">
+                JASON KIM
+                SENIOR PRODUCT DESIGNER AT PILOT
+                BUILDING THOUGHTFUL PRODUCTS, ONE HONEST CONVERSATION AT A TIME.
+                VIEW PORTFOLIO →<span class="cursor"></span>
+            </pre>
+        </main>
+    </div>
+    <script src="script.js"></script>
 
-        <! –– Wayfair ––>
-        <div class="bb bw1 b--moon-gray">
-            <div class="flex justify-between items-center  ph4 pv1
-            ">
-              <h1 class="f2-ns f3"><a href="https://www.wayfair.com/" class="black dim underline">Wayfair ↗</a></h1>
-              <h1 class="bit-serif f3-ns f4">2018 — 2021</h1>
-            </div>
-        </div>
+</body>
 
-        <! –– Accenture Interactive––>
-        <div class="bb bw1 b--moon-gray">
-            <div class="flex justify-between items-center  ph4 pv1
-            ">
-              <h1 class="f2-ns f3"><a href="https://www.accenture.com/us-en/about/accenture-interactive-index" class="black dim underline">Accenture Interactive ↗</a></h1>
-              <h1 class="bit-serif f3-ns f4">2018</h1>
-            </div>
-        </div>
-
-        <! –– Moment ––>
-        <div class="bb bw1 b--moon-gray">
-            <div class="flex justify-between items-center  ph4 pv1
-            ">
-              <h1 class="f2-ns f3"><a href="http://www.momentdesign.com/" class="black dim underline">Moment ↗</a></h1>
-              <h1 class="bit-serif f3-ns f4">2017</h1>
-            </div>
-        </div>
-
-        <! –– Empty Lines ––>
-        <div class="bb bw1 b--moon-gray">
-          <div class="flex justify-between  ph4 h3"></div>
-        </div>
-        <div class="bb bw1 b--moon-gray">
-          <div class="flex justify-between items-center ph4 h3">
-            <h1 class="bit-serif f2-ns f3 mr3"><mark>Say Hi!</mark></h1>
-            <h1 class="f-headline-ns f-subhealdine lh-title pv0 mv0" id="wavehi">👋</h1>
-          </div>
-        </div>
-
-        <! –– Social Links ––>
-        <div class="flex justify-between  ph4 pv1">
-          <h1 class="f2-ns f3 underline"><a href="https://www.instagram.com/kim.json/" class="black dim underline">insta ↗</a></h1>
-          <h1 class="f2-ns f3 underline"><a href="https://twitter.com/miknosaj" class="black dim underline">twitter ↗</a></h1>
-          <h1 class="f2-ns f3 underline"><a href="https://www.linkedin.com/in/miknosaj/" class="black dim underline">linkedin ↗</a></h1>
-        </div>
-      </div>
-    </main>
-    <script src="/src/js/main.js"></script>
-  </body>
 </html>
