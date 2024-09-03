@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
 `2022-PRESENT      PILOT
 2021-2022         HYPR
 2018-2021         WAYFAIR
-2018              ACCENTURE INTERACTIVE
+2018              ACCENTURE
 2017              MOMENT`,
         RESUME: `[[RESUME_LINK]]`,
         CONTACT: `SAY HI!
