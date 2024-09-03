@@ -26,7 +26,7 @@ body {
 
 @media (max-width: 499px) {
     .terminal {
-        padding: 8px 12px 0 12px;
+        padding: 4px 6px 0 6px;
     }
 }
 
