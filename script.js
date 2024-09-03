@@ -10,11 +10,11 @@ document.addEventListener('DOMContentLoaded', function() {
 2018-2021         WAYFAIR
 2018              ACCENTURE
 2017              MOMENT`,
-        RESUME: `[[RESUME_LINK]]`,
+        RESUME: `DOWNLOAD_RESUME`,
         CONTACT: `SAY HI!
-[[INSTAGRAM_LINK]]
-[[TWITTER_LINK]]
-[[LINKEDIN_LINK]]`
+INSTAGRAM
+TWITTER
+LINKEDIN`
     };
 
     const fileLinks = document.querySelectorAll('.file');
@@ -89,12 +89,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 );
             } else if (file === 'CONTACT') {
                 fileContentElement.innerHTML = fileContentElement.innerHTML
-                    .replace('[[INSTAGRAM_LINK]]', '<a href="https://www.instagram.com/kim.json" target="_blank" class="file">INSTAGRAM</a>')
-                    .replace('[[TWITTER_LINK]]', '<a href="https://twitter.com/miknosaj" target="_blank" class="file">TWITTER</a>')
-                    .replace('[[LINKEDIN_LINK]]', '<a href="https://www.linkedin.com/in/miknosaj" target="_blank" class="file">LINKEDIN</a>');
+                    .replace('INSTAGRAM', '<a href="https://www.instagram.com/kim.json" target="_blank" class="file">INSTAGRAM</a>')
+                    .replace('TWITTER', '<a href="https://twitter.com/miknosaj" target="_blank" class="file">TWITTER</a>')
+                    .replace('LINKEDIN', '<a href="https://www.linkedin.com/in/miknosaj" target="_blank" class="file">LINKEDIN</a>');
             } else if (file === 'RESUME') {
                 fileContentElement.innerHTML = fileContentElement.innerHTML.replace(
-                    '[[RESUME_LINK]]',
+                    'DOWNLOAD_RESUME',
                     '<a href="files/Jason-Kim_Resume2024.pdf" class="file">DOWNLOAD_RESUME</a>'
                 );
             }
