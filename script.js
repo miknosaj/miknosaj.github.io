@@ -2,7 +2,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const fileContent = {
         PROFILE: `SENIOR PRODUCT DESIGNER AT PILOT
 
-"BUILDING THOUGHTFUL PRODUCTS, ONE HONEST CONVERSATION AT A TIME."`,
+"BUILDING THOUGHTFUL PRODUCTS, ONE HONEST CONVERSATION AT A TIME."
+VIEW_PORTFOLIO`,
 
         HISTORY: 
 `2022-PRESENT      PILOT
@@ -84,8 +85,8 @@ LINKEDIN`
         typeContent(fileContentElement, content, () => {
             if (file === 'PROFILE') {
                 fileContentElement.innerHTML = fileContentElement.innerHTML.replace(
-                    '[[PORTFOLIO_LINK]]',
-                    '<a href="https://www.jasonkim.xyz" target="_blank" rel="noopener noreferrer" class="file">VIEW_PORTFOLIO</a>'
+                    'VIEW_PORTFOLIO',
+                    '<a href="https://www.jasonkim.xyz/portfolio" target="_blank" rel="noopener noreferrer" class="file">VIEW_PORTFOLIO</a>'
                 );
             } else if (file === 'CONTACT') {
                 fileContentElement.innerHTML = fileContentElement.innerHTML
