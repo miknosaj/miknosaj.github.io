@@ -68,12 +68,11 @@ p {
 
 .bolded {
   color: #333333;
-  font-weight: bold;
   text-shadow: 
-    -0.2px -0.2px 0 #333333,
-    0.2px -0.2px 0 #333333,
-    -0.2px 0.2px 0 #333333,
-    0.2px 0.2px 0 #333333;
+    -0.3px -0.3px 0 #333333,
+    0.3px -0.3px 0 #333333,
+    -0.3px 0.3px 0 #333333,
+    0.3px 0.3px 0 #333333;
 }
 
 .divided {
