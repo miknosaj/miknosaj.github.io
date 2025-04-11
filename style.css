@@ -15,6 +15,7 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column; /* Added for vertical alignment control */
+  height: 100vh; /* Ensures body takes full viewport height */
 }
 
 .receipt {
