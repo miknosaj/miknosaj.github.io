@@ -18,7 +18,6 @@ body {
 }
 
 .receipt {
-  background-color: #ffffff;
   display: flex;
   flex-direction: column;
   align-items: flex-start;  
@@ -163,7 +162,7 @@ a {
 
 .tear-bottom {
   background-color: white;
-  margin: 0;
+  margin: -1px 0 0 0;
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -173,8 +172,8 @@ a {
 }
 
 .tear-top {
-  background-color: #000000;
-  margin: 0;
+  background-color: #000;
+  margin: 0 0 -1px 0;
   padding: 0;
   display: flex;
   flex-direction: column;
