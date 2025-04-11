@@ -1,59 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:title" content="Jason Kim" />
-    <meta property="og:description" content="Portfolio website" />
-    <meta property="og:image" content="https://jasonkim.xyz/images/thumbnail.png"/>
-    <meta property="og:url" content="https://jasonkim.xyz" />
-    <meta property="og:type" content="website" />
-    <title>Jason Kim</title>
-    <link rel="stylesheet" href="styles.css">
-    <link
-        rel="apple-touch-icon"
-        sizes="152x152"
-        href="favicon/apple-touch-icon.png"
-    />
-    <link
-        rel="icon"
-        type="image/png"
-        href="favicon/favicon-32x32.png"
-        sizes="32x32"
-    />
-    <link
-        rel="icon"
-        type="image/png"
-        href="favicon/favicon-16x16.png"
-        sizes="16x16"
-    />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="Jason Kim" />
+  <meta property="og:description" content="Portfolio website" />
+  <meta property="og:image" content="https://jasonkim.xyz/images/thumbnail.png"/>
+  <meta property="og:url" content="https://jasonkim.xyz" />
+  <meta property="og:type" content="website" />
+  <title>Jason Kim</title>
+  <link rel="stylesheet" href="style.css">
+  <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="favicon/apple-touch-icon.png"
+  />
+  <link
+      rel="icon"
+      type="image/png"
+      href="favicon/favicon-32x32.png"
+      sizes="32x32"
+  />
+  <link
+      rel="icon"
+      type="image/png"
+      href="favicon/favicon-16x16.png"
+      sizes="16x16"
+  />
 </head>
-
 <body>
-    <div class="terminal">
-        <section>
-            <div class="header-content">
-                <pre class="output">JASON KIM</pre>
-                <pre class="output location-time">NYC <span id="current-time"></span></pre>
-            </div>
-            <span class="command"> ls -l</span>
-            <ul id="directory">
-                <li><a href="#" class="file" data-file="PROFILE"><span class="file-name"><span class="file-name-text">PROFILE</span><span class="file-name-ext">TXT</span></span></a></li>
-                <li><a href="#" class="file" data-file="HISTORY"><span class="file-name"><span class="file-name-text">HISTORY</span><span class="file-name-ext">TXT</span></span></a></li>
-                <li><a href="#" class="file" data-file="RESUME"><span class="file-name"><span class="file-name-text">RESUME</span><span class="file-name-ext">PDF</span></span></a></li>
-                <li><a href="#" class="file" data-file="CONTACT"><span class="file-name"><span class="file-name-text">CONTACT</span><span class="file-name-ext">TXT</span></span></a></li>
-            </ul>
-        </section>
-
-        <main>
-            <p class="command">cat <span id="current-file">PROFILE.TXT</span></p>
-            <pre id="file-content" class="output">
-            </pre>
-        </main>
+  <div class="receipt">
+    <div class="tear-top">
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="9" viewBox="0 0 12 9" fill="none">
+        <path d="M0 9V0L4 1.8H6C7.2111 1.8 8.30342 2.52822 8.76923 3.64616L11 9H0Z" fill="white"/>
+      </svg>
     </div>
-    <script src="script.js"></script>
+    <div class="card">
+      <div class="headerfooter">
+        <div class="title">
+          <p class="bolded">Jason Kim</p>
+          <p>Senior Product Designer</p>
+          <p>New York City</p>
+        </div>
+        <p id="nyc-time">April 10, 2025 11:30 AM</p>
+      </div>
 
+      <div class="divided">
+        <div class="divider"></div>
+        <div class="row">
+          <p class="bolded">Host</p>
+          <p class="bolded">JASON</p>
+        </div>
+        <div class="divider"></div>
+      </div>
+
+      <div class="history-content">
+        <div class="row"><p>Pilot</p><p>2022 – NOW.</p></div>
+        <div class="row"><p>HYPR</p><p>2021 – 2022</p></div>
+        <div class="row"><p>Wayfair</p><p>2020 – 2021</p></div>
+        <div class="row"><p>Accenture</p><p>2018</p></div>
+        <div class="row"><p>Moment</p><p>2017</p></div>
+      </div>
+      
+      <div class="divided">
+        <div class="divider"></div>
+        <div class="links">
+          <a href="https://www.jasonkim.xyz/portfolio" target="_blank" rel="noopener noreferrer" class="file">Portfolio</a>
+          <a href="files/Jason-Kim_Resume2025.pdf">Résumé</a>
+          <a href="https://www.linkedin.com/in/miknosaj">Linkedin</a>
+        </div>
+        <div class="divider"></div>
+      </div>
+
+      <div class="headerfooter">
+        <p>"Building thoughtful products,<br>one honest conversation at a time."</p>
+        <p class="icons">♫ ♫ ♫</p>
+      </div>
+    </div>
+    <div class="tear-bottom">
+      <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 11 11" fill="none">
+        <path d="M0 11L0 0L5.5 1.5L7.5 5.5L11 11H0Z" fill="black"/>
+      </svg>
+    </div>
+  </div>
+
+<script>
+    function updateNYCTime() {
+        const date = new Date();
+        const options = {
+            timeZone: 'America/New_York',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true
+        };
+        
+        const nycTime = date.toLocaleString('en-US', options)
+            .replace(' at ', ' ');  // Remove the "at"
+            
+        document.getElementById('nyc-time').textContent = nycTime;
+    }
+    updateNYCTime();
+    setInterval(updateNYCTime, 60000);
+</script>
 </body>
-
 </html>
