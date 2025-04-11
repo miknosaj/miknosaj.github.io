@@ -15,15 +15,31 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  flex-direction: column; /* Added for vertical alignment control */
 }
 
 .receipt {
+  max-width: 367px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;  
-  transform: rotate(-1.25deg);
   opacity: 0;
   animation: fadeInSlideTilt 1s ease-out forwards;
+  margin: 48px 0;
+}
+
+/* Media query for screens less than 500px */
+@media (max-width: 500px) {
+  body {
+    justify-content: flex-start;
+    padding-top: 24px; /* Optional: gives breathing room */
+  }
+
+  .receipt {
+    margin: 24px 16px; /* Horizontal padding */
+    width: calc(100% - 32px); /* Ensures width respects margins */
+    max-width: 367px;
+  }
 }
 
 .headerfooter {
@@ -48,7 +64,7 @@ text-align: center;
 
 .card {
   background: white;
-  width: 357px;
+  align-self: stretch;
   display: flex;
   padding: 48px 16px 37px 16px;
   flex-direction: column;
@@ -194,15 +210,11 @@ a {
 
 @keyframes fadeInSlideTilt {
   0% {
-    transform: translateY(20px) rotate(0deg);
+    transform: translateY(20px);
     opacity: 0;
   }
-  25% {
-    transform: translateY(10px) rotate(0deg);
-    opacity: 1;
-  }
   100% {
-    transform: translateY(0) rotate(-1.25deg);
+    transform: translateY(0);
     opacity: 1;
   }
 }
