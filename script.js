@@ -96,7 +96,7 @@ LINKEDIN`
             } else if (file === 'RESUME') {
                 fileContentElement.innerHTML = fileContentElement.innerHTML.replace(
                     'DOWNLOAD_RESUME',
-                    '<a href="files/Jason-Kim_Resume2024.pdf" class="file">DOWNLOAD_RESUME</a>'
+                    '<a href="files/Jason-Kim_Resume2025.pdf" class="file">DOWNLOAD_RESUME</a>'
                 );
             }
             fileContentElement.innerHTML += '<span class="cursor"></span>';
