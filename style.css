@@ -32,6 +32,7 @@ body {
 @media (max-width: 500px) {
   body {
     justify-content: flex-start;
+    height: 100vh; /* Ensures body takes full viewport height */
   }
 
   .receipt {
