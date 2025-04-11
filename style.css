@@ -14,7 +14,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
   flex-direction: column; /* Added for vertical alignment control */
 }
 
@@ -25,7 +24,7 @@ body {
   align-items: flex-start;  
   opacity: 0;
   animation: fadeInSlideTilt 1s ease-out forwards;
-  margin: 48px 0 0 0;
+  margin: 48px 0 24px 0;
 }
 
 /* Media query for screens less than 500px */
