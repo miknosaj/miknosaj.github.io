@@ -59,6 +59,7 @@ text-align: center;
   justify-content: center;
   align-items: center;
   gap: 32px;
+  z-index: -10;
 }
 
 p {
@@ -195,6 +196,56 @@ a {
   margin: 0;
   padding: 0;
 }
+
+.canvasWrapper {
+  width: 100%;
+  height: 100%;
+  max-width: 600px;
+  aspect-ratio: 2s / 1;
+}
+
+canvas {
+  background-color: transparent;
+  margin: 0 -16px;
+  padding: 0;
+  width: 390px;
+  height: 100%;
+  display: block;
+  touch-action: none;
+  cursor: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTguMTQxNSAxLjg1ODU2TDE2LjE0MTUgMy44NTg1NkwyMC4xNDE1IDcuODU4NTZMOC4wNzA4NiAxOS45MjkyTDQuMDAwMDUgMjAuOTk5OUw1LjA3MDg2IDE2LjkzMDdMMTguMTQxNSAxLjg1ODU2WiIgZmlsbD0iIzAwMDAwMCIvPjwvc3ZnPg==') 0 24, auto;
+}
+
+
+.signature {
+  margin-top: -20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+.signhere {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-self: stretch;
+  width: 100%;
+  position: absolute;
+  top: 120px;
+  z-index: -1;
+}
+
+.line {
+  width: 100%;
+  height: 1.5px;
+  background-color: #000000;
+  align-self: flex-end;
+  z-index: 20;
+  position: relative;
+}
+
+
 
 @keyframes fadeInSlideTilt {
   0% {

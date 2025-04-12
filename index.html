@@ -73,6 +73,13 @@
         <div class="divider"></div>
       </div>
 
+      <div class="signature">
+        <div class="canvasWrapper">
+            <canvas id="drawArea"></canvas>
+        </div>
+        <div class="signhere">x<div class="line"></div></div>
+      </div>
+
       <div class="headerfooter">
         <p>"Building thoughtful products,<br>one honest conversation at a time."</p>
         <p class="icons">♫ ♫ ♫</p>
@@ -86,6 +93,65 @@
   </div>
 
 <script>
+    const canvas = document.getElementById('drawArea');
+    const ctx = canvas.getContext('2d');
+    let drawing = false;
+
+    // Disable pressure sensitivity (line width stays constant)
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = '#000000';
+
+    const resizeCanvas = () => {
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+    };
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    const getPos = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        if (e.touches) {
+        return {
+            x: e.touches[0].clientX - rect.left,
+            y: e.touches[0].clientY - rect.top
+        };
+        }
+        return {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top
+        };
+    };
+
+    const startDraw = (e) => {
+        drawing = true;
+        const pos = getPos(e);
+        ctx.beginPath();
+        ctx.moveTo(pos.x, pos.y);
+    };
+
+    const draw = (e) => {
+        if (!drawing) return;
+        const pos = getPos(e);
+        ctx.lineTo(pos.x, pos.y);
+        ctx.stroke();
+    };
+
+    const endDraw = () => {
+        drawing = false;
+    };
+
+    canvas.addEventListener('mousedown', startDraw);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', endDraw);
+    canvas.addEventListener('mouseout', endDraw);
+
+    canvas.addEventListener('touchstart', startDraw);
+    canvas.addEventListener('touchmove', draw);
+    canvas.addEventListener('touchend', endDraw);
+    
     function updateNYCTime() {
         const date = new Date();
         const options = {
