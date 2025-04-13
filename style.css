@@ -26,7 +26,7 @@ body {
   align-items: flex-start;  
   opacity: 0;
   animation: fadeInSlideTilt .5s ease-in-out forwards;
-  margin: 48px 0 48px 0;
+  margin: 48px 24px 0;
 }
 
 
@@ -199,7 +199,7 @@ a {
 
 .canvasWrapper {
   width: 100%;
-  height: 100%;
+  height: 139px;
   max-width: 600px;
   aspect-ratio: 2s / 1;
 }
@@ -209,7 +209,7 @@ canvas {
   margin: 0 -16px;
   padding: 0;
   width: 390px;
-  height: 100%;
+  height: 200px; /* Set a fixed height to visually shorten the canvas */
   display: block;
   touch-action: none;
   cursor: crosshair;
@@ -266,10 +266,11 @@ canvas {
   body {
     justify-content: flex-start;
     height: 100vh; /* Ensures body takes full viewport height */
+    padding-bottom: 48px; /* Added padding to the bottom of the body */
   }
 
   .receipt {
-    margin: 24px 16px; /* Horizontal padding */
+    margin: 24px 16px; /* Keep the margin as is */
     width: calc(100% - 32px); /* Ensures width respects margins */
   }
 
