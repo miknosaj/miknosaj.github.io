@@ -10,7 +10,7 @@ body {
   font-family: 'Departure Mono', monospace;
   color: #000;
   margin: 0;
-  padding: 0;
+  padding: 0 0 24px 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -266,7 +266,7 @@ canvas {
   body {
     justify-content: flex-start;
     height: 100vh; /* Ensures body takes full viewport height */
-    padding-bottom: 48px; /* Added padding to the bottom of the body */
+    padding-bottom: 24px; /* Added padding to the bottom of the body */
   }
 
   .receipt {
