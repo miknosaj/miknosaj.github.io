@@ -104,12 +104,21 @@
     ctx.strokeStyle = '#000000';
 
     const resizeCanvas = () => {
-        canvas.width = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
+        const newWidth = canvas.offsetWidth;
+        const newHeight = canvas.offsetHeight;
+
+        // Only resize if the dimensions have changed
+        if (canvas.width !== newWidth || canvas.height !== newHeight) {
+            // Store the current drawing in an image
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            canvas.width = newWidth;
+            canvas.height = newHeight;
+            ctx.putImageData(imageData, 0, 0); // Restore the drawing
+        }
     };
 
     window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
+    resizeCanvas(); // Initial resize
 
     const getPos = (e) => {
         const rect = canvas.getBoundingClientRect();
