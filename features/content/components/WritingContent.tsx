@@ -1,3 +1,4 @@
+import { useEffect, useMemo } from 'react';
 import { InlineImage } from '@/shared/ui/media/InlineImage';
 import { InlineVideo } from '@/shared/ui/media/InlineVideo';
 import { InlineImageStack } from '@/shared/ui/media/InlineImageStack';
@@ -41,6 +42,49 @@ interface WritingContentProps {
 }
 
 export function WritingContent({ blocks }: WritingContentProps) {
+  const imagesToPrefetch = useMemo(() => {
+    const urls = new Set<string>();
+    blocks.forEach((block) => {
+      if (block.type === 'image') {
+        urls.add(block.image.src);
+      }
+      if (block.type === 'imageStack') {
+        block.stack.forEach((item) => urls.add(item.src));
+      }
+    });
+    return Array.from(urls);
+  }, [blocks]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || imagesToPrefetch.length === 0) {
+      return;
+    }
+
+    const runPrefetch = () => {
+      imagesToPrefetch.forEach((src) => {
+        const img = new Image();
+        img.decoding = 'async';
+        img.loading = 'eager';
+        img.src = src;
+      });
+    };
+
+    const idleWindow = window as typeof window & {
+      requestIdleCallback?: (callback: IdleRequestCallback) => number;
+      cancelIdleCallback?: (handle: number) => void;
+    };
+
+    if (idleWindow.requestIdleCallback) {
+      const idleId = idleWindow.requestIdleCallback(runPrefetch);
+      return () => idleWindow.cancelIdleCallback?.(idleId);
+    }
+
+    const timeoutId = window.setTimeout(runPrefetch, 0);
+    return () => window.clearTimeout(timeoutId);
+  }, [imagesToPrefetch]);
+
+  let firstImageRendered = false;
+
   return (
     <div className="flex flex-col gap-4 w-full overflow-visible">
       {blocks.map((block, index) => {
@@ -62,6 +106,8 @@ export function WritingContent({ blocks }: WritingContentProps) {
 
         if (block.type === 'image') {
           const { image } = block;
+          const shouldPrioritize = !firstImageRendered;
+          firstImageRendered = true;
           return (
             <InlineImage
               key={`image-${index}`}
@@ -69,6 +115,7 @@ export function WritingContent({ blocks }: WritingContentProps) {
               alt={image.alt}
               pageType="writing"
               caption={image.caption}
+              priority={shouldPrioritize}
             />
           );
         }
