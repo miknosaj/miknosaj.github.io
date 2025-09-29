@@ -13,8 +13,12 @@ export function InlineVideo({ src, caption }: InlineVideoProps) {
     const video = videoRef.current;
     if (!video) return;
 
-    video.controls = false;
+    // Ensure the right attributes are present before playback attempts (important for iOS Safari)
+    video.setAttribute('playsinline', 'true');
+    video.setAttribute('muted', 'true');
     video.muted = true;
+    video.autoplay = true;
+    video.controls = false;
 
     const attemptPlayback = async () => {
       try {
@@ -25,18 +29,18 @@ export function InlineVideo({ src, caption }: InlineVideoProps) {
       }
     };
 
-    if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+    if (video.readyState >= HTMLMediaElement.HAVE_ENOUGH_DATA) {
       void attemptPlayback();
       return;
     }
 
-    const handleCanPlay = () => {
+    const handleLoadedData = () => {
       void attemptPlayback();
     };
 
-    video.addEventListener('canplay', handleCanPlay, { once: true });
+    video.addEventListener('loadeddata', handleLoadedData, { once: true });
     return () => {
-      video.removeEventListener('canplay', handleCanPlay);
+      video.removeEventListener('loadeddata', handleLoadedData);
     };
   }, [src]);
 
@@ -47,11 +51,13 @@ export function InlineVideo({ src, caption }: InlineVideoProps) {
         src={src}
         className="w-full h-auto object-cover"
         style={{ objectPosition: 'center' }}
-        preload="metadata"
+        preload="auto"
         autoPlay
         loop
         muted
         playsInline
+        controls={false}
+        controlsList="nodownload noremoteplayback"
       />
     </InlineMediaFrame>
   );
