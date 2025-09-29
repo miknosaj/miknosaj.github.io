@@ -223,10 +223,10 @@ body {
 .content-page-container::before {
   content: '';
   position: fixed;
-  top: calc(-1 * env(safe-area-inset-top, 0px));
+  top: 0;
   left: 0;
   width: 100%;
-  height: calc(6rem + env(safe-area-inset-top, 0px));
+  height: 6rem;
   background: linear-gradient(
     180deg,
     #ffffff 0%,

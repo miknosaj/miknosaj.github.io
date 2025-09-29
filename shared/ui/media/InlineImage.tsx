@@ -1,5 +1,4 @@
 import { InlineMediaFrame } from './InlineMedia';
-import { ProgressiveImage } from './ProgressiveImage';
 
 interface InlineImageProps {
   src: string;
@@ -7,21 +6,22 @@ interface InlineImageProps {
   pageType?: 'photography' | 'writing';
   caption?: string;
   orientation?: 'portrait' | 'landscape';
-  priority?: boolean;
 }
 
-export function InlineImage({ src, alt, pageType = 'writing', caption, orientation, priority }: InlineImageProps) {
-  const aspectRatio = orientation ? (orientation === 'portrait' ? '3 / 4' : '4 / 3') : undefined;
-
+export function InlineImage({ src, alt, pageType = 'writing', caption, orientation }: InlineImageProps) {
   return (
     <InlineMediaFrame pageType={pageType} orientation={orientation} caption={caption}>
-      <ProgressiveImage
+      <img
         src={src}
         alt={alt}
-        priority={priority}
-        aspectRatio={aspectRatio}
-        className="h-full"
+        className="w-full h-auto object-cover bg-[#f5f5f5]"
         style={{ objectPosition: 'center' }}
+        loading="lazy"
+        decoding="async"
+        onError={(e) => {
+          // Hide the broken image to reveal the solid background color
+          (e.currentTarget as HTMLImageElement).style.visibility = 'hidden';
+        }}
       />
     </InlineMediaFrame>
   );
