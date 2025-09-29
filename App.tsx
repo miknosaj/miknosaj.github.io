@@ -1,6 +1,6 @@
 import { Route, Routes, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { Analytics } from '@vercel/analytics/next';
+import { Analytics } from '@vercel/analytics/react';
 import { Portfolio, usePortfolioState, getPortfolioContent, getBioSections } from '@/features/portfolio';
 import { PageFactory } from '@/features/content';
 import { ErrorPage } from '@/shared/ui/feedback/ErrorPage';
@@ -51,6 +51,7 @@ export default function App() {
         onGlobalClick={portfolioState.handleGlobalClick}
       >
         <Analytics />
+        <Analytics route={location.pathname} path={`${location.pathname}${location.search}`} />
         <Routes>
           <Route
             path="/"
