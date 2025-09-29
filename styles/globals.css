@@ -1,0 +1,526 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@custom-variant dark (&:is(.dark *));
+
+/* Font face declaration for Sohne-Buch */
+@font-face {
+  font-family: 'Sohne';
+  src: url('../assets/fonts/sohne-buch.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Sohne Halbfett (Bold) */
+@font-face {
+  font-family: 'Sohne';
+  src: url('../assets/fonts/sohne-halbfett.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-size: 14px;
+  --background: #ffffff;
+  --foreground: oklch(0.145 0 0);
+
+  --primary: #030213;
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.95 0.0058 264.53);
+  --secondary-foreground: #030213;
+  --muted: #ececf0;
+  --muted-foreground: #717182;
+  --accent: #e9ebef;
+  --accent-foreground: #030213;
+
+  --border: rgba(0, 0, 0, 0.1);
+  --switch-background: #cbced4;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --ring: oklch(0.708 0 0);
+
+  --radius: 0.625rem;
+
+  /* Portfolio brand colors */
+  --portfolio-primary: #4000ff;
+  --portfolio-text: #373737;
+  --portfolio-muted: #9c9c9b;
+  --portfolio-border: #f2f2f2;
+  --portfolio-background-active: rgba(255, 255, 255, 0.8);
+  
+  /* Portfolio typography system */
+  --portfolio-font-size: 14px;
+  --portfolio-line-height: 21px;
+  --portfolio-font-family: 'Sohne', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  
+  /* Interactive animation timings */
+  --typewriter-speed: 4; /* milliseconds per character */
+  --typewriter-cursor-width: 2px;
+  --typewriter-cursor-height: 16px;
+  --motion-duration-fast: 0.3s;
+  --motion-duration-medium: 0.4s;
+
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+
+  --primary: oklch(0.985 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+
+  --border: oklch(0.269 0 0);
+  --ring: oklch(0.439 0 0);
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-border: var(--border);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/**
+ * Base typography. This is not applied to elements which have an ancestor with a Tailwind text class.
+ */
+@layer base {
+  :where(:not(:has([class*=" text-"]), :not(:has([class^="text-"])))) {
+    h1 {
+      font-size: var(--text-2xl);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h2 {
+      font-size: var(--text-xl);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h3 {
+      font-size: var(--text-lg);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    h4 {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    p {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-normal);
+      line-height: 1.5;
+    }
+
+    label {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+
+    button {
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-medium);
+      line-height: 1.5;
+    }
+  }
+}
+
+html {
+  font-size: var(--font-size);
+  font-family: var(--portfolio-font-family);
+}
+
+body {
+  font-family: var(--portfolio-font-family);
+}
+
+/* Portfolio-specific styles */
+
+/* Layout utilities */
+
+.portfolio-container {
+  width: 100%;
+  max-width: 30rem; /* slightly wider */
+  overflow: visible;
+  padding-top: 2rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-bottom: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .portfolio-container {
+    padding-top: 5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Content page specific padding */
+.content-page-container {
+  position: relative;
+  padding-bottom: 8rem; /* Generous bottom padding for content pages */
+  overflow: visible; /* allow content to bleed out of column */
+}
+
+@media (min-width: 768px) {
+  .content-page-container {
+    padding-bottom: 10rem; /* Even more padding on desktop */
+    overflow: visible;
+  }
+}
+
+.content-page-container {
+  position: relative;
+}
+
+/* Ensure all descendants on content pages can visually overflow when needed */
+/* Keep overflow visible only on known media wrappers */
+
+.content-page-container::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6rem;
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    hsla(0, 0%, 100%, 0.738) 19%,
+    hsla(0, 0%, 100%, 0.541) 34%,
+    hsla(0, 0%, 100%, 0.382) 47%,
+    hsla(0, 0%, 100%, 0.278) 56.5%,
+    hsla(0, 0%, 100%, 0.194) 65%,
+    hsla(0, 0%, 100%, 0.126) 73%,
+    hsla(0, 0%, 100%, 0.075) 80.2%,
+    hsla(0, 0%, 100%, 0.042) 86.1%,
+    hsla(0, 0%, 100%, 0.021) 91%,
+    hsla(0, 0%, 100%, 0.008) 95.2%,
+    hsla(0, 0%, 100%, 0.002) 98.2%,
+    hsla(0, 0%, 100%, 0) 100%
+  );
+  pointer-events: none;
+  z-index: 20;
+}
+
+/* Interactive triggers */
+.portfolio-trigger {
+  display: inline-flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  height: var(--portfolio-line-height);
+  padding: 0.01rem 0.3rem 0;
+  border-radius: 0.25rem;
+  cursor: pointer !important;
+  transition: all 0.3s ease;
+  background-color: var(--portfolio-primary);
+  color: white;
+  font-size: var(--portfolio-font-size);
+  line-height: var(--portfolio-line-height);
+  font-weight: var(--font-weight-medium);
+  vertical-align: baseline;
+}
+
+.portfolio-trigger--active {
+  background-color: #4b5563;
+  color: white;
+}
+
+.portfolio-trigger--disabled {
+  background-color: rgb(229 231 235);
+  color: var(--portfolio-text);
+  cursor: pointer !important;
+}
+
+.portfolio-link {
+  color: var(--portfolio-primary);
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.portfolio-link:hover:not(.portfolio-link--disabled) {
+  color: #60a5fa;
+}
+
+.portfolio-link--disabled {
+  color: var(--portfolio-text);
+  cursor: pointer;
+}
+
+.my-gradient-text {
+  display: inline-block;
+  color: transparent;
+  background: linear-gradient(to bottom, #ffffff 70%, rgba(255, 255, 255, 0) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.portfolio-link svg,
+.portfolio-text svg {
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.content-page-back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  overflow: visible;
+  position: relative; /* ensure focus outline renders above header gradient */
+  z-index: 30;
+  padding-left: 1.25rem; /* smaller reserve so focus ring looks tighter */
+  margin-left: -1.375rem; /* tiny nudge further left */
+}
+
+.content-page-back-button__icon {
+  display: inline-flex;
+  margin-left: -1.25rem; /* keep arrow hang consistent with button shift */
+  transition: transform 0.3s ease;
+}
+
+.content-page-back-button:hover .content-page-back-button__icon {
+  transform: translateX(-0.125rem); /* match arrow translate (0.5) */
+}
+
+/* Typewriter elements */
+.typewriter-content {
+  margin-top: 0;
+}
+
+/* Ensure overlays stack properly */
+.typewriter-overlay:nth-child(1) { z-index: 30; }
+.typewriter-overlay:nth-child(2) { z-index: 40; }
+.typewriter-overlay:nth-child(3) { z-index: 50; }
+.typewriter-overlay:nth-child(4) { z-index: 60; }
+
+.nested-trigger {
+  display: inline-flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  height: var(--portfolio-line-height);
+  padding: 0.01rem 0.3rem 0;
+  border-radius: 0.25rem;
+  transition: all 0.3s ease;
+  font-size: var(--portfolio-font-size);
+  line-height: var(--portfolio-line-height);
+  font-weight: var(--font-weight-medium);
+  vertical-align: baseline;
+}
+
+.nested-trigger--inactive {
+  background-color: var(--portfolio-primary);
+  color: white;
+}
+
+.nested-trigger--clickable {
+  cursor: pointer !important;
+}
+
+.nested-trigger--active {
+  background-color: #4b5563;
+  color: white;
+  cursor: pointer !important;
+}
+
+/* Typography utilities */
+.portfolio-text {
+  color: var(--portfolio-text);
+  font-size: var(--portfolio-font-size);
+  line-height: var(--portfolio-line-height);
+  font-family: var(--portfolio-font-family);
+}
+
+.portfolio-text--muted {
+  color: var(--portfolio-muted);
+}
+
+/* Background transitions */
+.portfolio-background-active {
+  background-color: var(--portfolio-background-active);
+}
+
+.portfolio-dimmed {
+  opacity: 0.45;
+  filter: blur(4px);
+}
+
+/* Interactive trigger and blur effects */
+.blur-sm * {
+  cursor: inherit !important;
+}
+
+.blur-sm {
+  overflow: visible !important;
+}
+
+/* Prevent blur from affecting active content and animations */
+.z-30, .z-40, .z-50 {
+  isolation: isolate;
+  filter: none !important;
+}
+
+/* Ensure animated elements are never blurred */
+[data-name*="image"], [class*="animate"], [class*="motion"] {
+  isolation: isolate;
+  filter: none !important;
+}
+
+/* Allow blur effects to extend properly */
+body, html {
+  overflow-x: visible;
+  overflow-y: auto;
+}
+
+/* Ensure React root never creates a second scroll container */
+#root {
+  overflow: visible !important;
+}
+
+/* Overflow management hierarchy */
+.portfolio-container,
+.portfolio-container * {
+  overflow: visible !important;
+}
+
+/* Gallery-specific overflow control */
+.modular-gallery-container {
+  overflow: visible !important;
+}
+
+.modular-gallery-image,
+.portfolio-container .modular-gallery-image,
+.portfolio-container .modular-gallery-image * {
+  overflow: hidden !important;
+}
+
+/* Image elements need constrained overflow */
+img,
+picture,
+[class*="rounded"] {
+  overflow: hidden !important;
+}
+
+/* Mobile responsive behavior */
+@media (max-width: 767px) {
+  body, html {
+    overflow-x: visible !important;
+    overflow-y: auto !important;
+  }
+  /* Ensure the React root does not introduce an additional scroller */
+  #root {
+    overflow: visible !important;
+  }
+}
+
+/* Inline image styles for writing content */
+.inline-image-container {
+  overflow: visible !important;
+}
+
+/* Ensure inline images can break out of content container */
+.portfolio-container .inline-image-container {
+  overflow: visible !important;
+}
+
+/* Mobile: images fit within content width */
+@media (max-width: 767px) {
+  .inline-image-container {
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+}
+
+/* Text selection styling */
+::selection {
+  background-color: #e5e7eb !important; /* slightly darker gray for better visibility */
+  color: inherit !important; /* keep original text color */
+}
+
+::-moz-selection {
+  background-color: #e5e7eb !important; /* slightly darker gray for better visibility */
+  color: inherit !important; /* keep original text color */
+}
+
+/* Ensure selection works on all portfolio text */
+.portfolio-container *::selection {
+  background-color: #e5e7eb !important;
+  color: inherit !important;
+}
+
+.portfolio-container *::-moz-selection {
+  background-color: #e5e7eb !important;
+  color: inherit !important;
+}
+
+/* Personal project hover arrow animation */
+.portfolio-link.group {
+  overflow: visible;
+}
+
+.portfolio-link.group svg {
+  will-change: transform, opacity;
+}
+
+/* Ensure the arrow doesn't interfere with text layout */
+.portfolio-link.group:not(:hover) svg {
+  pointer-events: none;
+}
+
+/* Reusable focus ring */
+.focus-ring:focus-visible {
+  outline: 2px solid #3b82f6; /* blue-500 */
+  outline-offset: 2px;
+}
+
+/* Custom font weight – Halbfett (semibold) */
+.halbfett {
+  font-weight: 700; /* use Halbfett font-face */
+}
+
+/* (removed blockquote-scale; quotes inherit base size) */
