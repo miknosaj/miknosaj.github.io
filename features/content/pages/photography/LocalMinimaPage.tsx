@@ -24,6 +24,7 @@ function LocalMinimaContent(_: LocalMinimaPageProps) {
           alt={alt ?? `Local Minima photograph ${index + 1}`}
           pageType="photography"
           orientation={orientation}
+          priority={index < 2}
         />
       ))}
     </div>

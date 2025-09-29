@@ -41,6 +41,8 @@ interface WritingContentProps {
 }
 
 export function WritingContent({ blocks }: WritingContentProps) {
+  let firstImageRendered = false;
+
   return (
     <div className="flex flex-col gap-4 w-full overflow-visible">
       {blocks.map((block, index) => {
@@ -62,6 +64,8 @@ export function WritingContent({ blocks }: WritingContentProps) {
 
         if (block.type === 'image') {
           const { image } = block;
+          const shouldPrioritize = !firstImageRendered;
+          firstImageRendered = true;
           return (
             <InlineImage
               key={`image-${index}`}
@@ -69,6 +73,7 @@ export function WritingContent({ blocks }: WritingContentProps) {
               alt={image.alt}
               pageType="writing"
               caption={image.caption}
+              priority={shouldPrioritize}
             />
           );
         }
