@@ -200,7 +200,6 @@ export function InlineImageStack({
             const z = images.length - pos;
             const base = baseTransforms[idx] ?? { angle: 0, tx: 0, ty: 0 };
             const isTop = pos === 0;
-            const isSecond = pos === 1;
             const targetRotate = hovered ? 0 : base.angle;
             const targetX = hovered ? 0 : base.tx;
             const targetY = hovered ? 0 : base.ty;
