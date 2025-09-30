@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { WritingContent } from '../..';
 import type { PageConfig } from '../../data/page-registry';
 import photoOne from '@/assets/content/modernism-photography/phomo1.webp';
@@ -5,6 +6,7 @@ import photoTwo from '@/assets/content/modernism-photography/phomo2.webp';
 import photoThree from '@/assets/content/modernism-photography/phomo3.webp';
 import photoFour from '@/assets/content/modernism-photography/phomo4.webp';
 import { withContentPage } from '../../components/withContentPage';
+import { imageDimensionsCache } from '@/shared/utils/imageDimensionsCache';
 
 interface ModernismPhotographyPageProps {
   onNavigateToIndex: () => void;
@@ -12,6 +14,10 @@ interface ModernismPhotographyPageProps {
 }
 
 function ModernismPhotographyContent(_: ModernismPhotographyPageProps) {
+  // Preload critical images
+  useEffect(() => {
+    imageDimensionsCache.preloadImages([photoOne, photoTwo, photoThree, photoFour]);
+  }, []);
   return (
     <WritingContent
       blocks={[

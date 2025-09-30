@@ -30,7 +30,7 @@ export function InlineMediaFrame({ pageType = 'writing', orientation, caption, c
         />
       </div>
       {caption && (
-        <figcaption className="mt-5 text-sm text-[#9c9c9b] leading-relaxed text-center">{caption}</figcaption>
+        <figcaption className="mt-8 text-sm text-[#9c9c9b] leading-relaxed text-center">{caption}</figcaption>
       )}
     </figure>
   );

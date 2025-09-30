@@ -1,6 +1,7 @@
 import { useMemo, type MouseEvent } from 'react';
 import { ArrowRightIcon } from '@/shared/icons/ArrowRightIcon';
 import { getPageConfig } from '@/features/content/data/page-registry';
+import { prefetchRoute } from '@/shared/utils/routePrefetch';
 import { SectionList } from './SectionList';
 import type { SideProjectsSectionProps } from './types';
 
@@ -51,6 +52,16 @@ export function SideProjectsSection({ disabled, items, onNavigateToPage, title }
                 event.preventDefault();
                 event.stopPropagation();
                 onNavigateToPage(item.key);
+              }}
+              onMouseEnter={() => {
+                if (!isDisabled) {
+                  prefetchRoute(item.key);
+                }
+              }}
+              onTouchStart={() => {
+                if (!isDisabled) {
+                  prefetchRoute(item.key);
+                }
               }}
               aria-disabled={isDisabled || undefined}
             >

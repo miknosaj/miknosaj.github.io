@@ -21,6 +21,30 @@
     <meta name="twitter:title" content="Jason Kim" />
     <meta name="twitter:description" content="Product Designer" />
     <meta name="twitter:image" content="/previews/preview.png" />
+    <link rel="preload" href="/assets/fonts/sohne-buch.otf" as="font" type="font/otf" crossorigin />
+    <link rel="preload" href="/assets/fonts/sohne-halbfett.otf" as="font" type="font/otf" crossorigin />
+    <script>
+      (function () {
+        const doc = document.documentElement;
+        doc.classList.add('fonts-loading');
+
+        if ('fonts' in document) {
+          Promise.all([
+            document.fonts.load('400 1rem "Sohne"'),
+            document.fonts.load('700 1rem "Sohne"'),
+          ])
+            .then(function () {
+              doc.classList.remove('fonts-loading');
+              doc.classList.add('fonts-loaded');
+            })
+            .catch(function () {
+              doc.classList.remove('fonts-loading');
+            });
+        } else {
+          doc.classList.remove('fonts-loading');
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

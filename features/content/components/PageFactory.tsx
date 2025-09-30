@@ -41,12 +41,14 @@ export function PageFactory({ slug, onNavigateToIndex }: PageFactoryProps) {
   return (
     <Suspense
       fallback={
-        <div className="portfolio-container">
+        <div className="portfolio-container opacity-0 animate-[fadeIn_0.2s_ease-in_forwards]">
           <div className="portfolio-text">Loading...</div>
         </div>
       }
     >
-      <ComponentLoader onNavigateToIndex={onNavigateToIndex} pageConfig={pageConfig} />
+      <div className="animate-[fadeIn_0.3s_ease-in]">
+        <ComponentLoader onNavigateToIndex={onNavigateToIndex} pageConfig={pageConfig} />
+      </div>
     </Suspense>
   );
 }

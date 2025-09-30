@@ -56,16 +56,18 @@ export default function App() {
           <Route
             path="/"
             element={
-              <Portfolio
-                profile={portfolioContent.profile}
-                bioSections={bioSections}
-                workHistory={portfolioContent.workHistory}
-                awards={portfolioContent.awards}
-                sideProjects={portfolioContent.sideProjects}
-                contact={portfolioContent.contact}
-                {...portfolioState}
-                onNavigateToPage={handleNavigateToPage}
-              />
+              <div className="animate-[fadeIn_0.3s_ease-in]">
+                <Portfolio
+                  profile={portfolioContent.profile}
+                  bioSections={bioSections}
+                  workHistory={portfolioContent.workHistory}
+                  awards={portfolioContent.awards}
+                  sideProjects={portfolioContent.sideProjects}
+                  contact={portfolioContent.contact}
+                  {...portfolioState}
+                  onNavigateToPage={handleNavigateToPage}
+                />
+              </div>
             }
           />
           <Route
