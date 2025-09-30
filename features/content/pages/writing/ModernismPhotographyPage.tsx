@@ -174,7 +174,7 @@ function ModernismPhotographyContent(_: ModernismPhotographyPageProps) {
           {
             type: 'text',
             content:
-              'That spirit did not remain inside city limits. The lens expanded outward, following the grids and peripheries of the American landscape. Robert Adams emerged as an attentive witness to spaces some forgot to name. The subjects: tract houses, parking lots, utility poles, and water towers were recorded with plainness, relinquishing both drama and nostalgia. New Topographics gave this style a vocabulary. Its landscapes are measured and resolute, an accounting rather than an elegy, where the act of looking is scaled to the shape of things as they are. In Adams’s or the Bechers’s hands, the image does not complete an argument; it traces the contours of change, making space for recognition without demanding answers.',
+              'That spirit did not remain inside city limits. The lens expanded outward, following the grids and peripheries of the American landscape. Robert Adams emerged as an attentive witness to spaces some forgot to name. The subjects: tract houses, parking lots, utility poles, and water towers were recorded with plainness, relinquishing both drama and nostalgia. New Topographics gave this style a vocabulary. Its landscapes are measured and resolute, an accounting rather than an elegy, where the act of looking is scaled to the shape of things as they are. In Adams’s or the Bechers’s hands, the image does not complete an argument; it traces the contours of change, making space for recognition without demanding answers. ',
           },
           { type: 'sectionHeader', title: 'The New Magnum: Parr for the course' },
           { type: 'sectionHeader', title: 'The New New Documents' },
