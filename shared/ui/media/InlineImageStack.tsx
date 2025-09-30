@@ -14,6 +14,7 @@ interface InlineImageStackProps {
   images: StackImage[];
   pageType?: 'photography' | 'writing';
   height?: number; // optional fixed container height in px (will use natural dimensions if not provided)
+  mobileHeight?: number; // optional mobile height (defaults to 60% of height if not provided)
   borderWidth?: number; // white frame thickness
   rotationMin?: number; // degrees
   rotationMax?: number; // degrees
@@ -35,13 +36,16 @@ export function InlineImageStack({
   images,
   pageType = 'writing',
   height,
-  rotationMin = 1,
-  rotationMax = 2.5,
+  mobileHeight,
+  rotationMin = 1.2,
+  rotationMax = 2.8,
   duration,
 }: InlineImageStackProps) {
   const [order, setOrder] = useState<number[]>(() => images.map((_, i) => i));
   const [hovered, setHovered] = useState(false);
   const [fadingTop, setFadingTop] = useState(false);
+  const [movingUp, setMovingUp] = useState(false);
+  const [hoverCycle, setHoverCycle] = useState(0);
   const [imageDimensions, setImageDimensions] = useState<Map<number, ImageDimensions>>(() => {
     // Try to get cached dimensions immediately
     const cachedMap = new Map<number, ImageDimensions>();
@@ -76,19 +80,62 @@ export function InlineImageStack({
   }, [images]);
 
   const baseTransforms = useMemo(() => {
-    const range = Math.max(rotationMin, 0);
+    const sanitizedMin = Math.max(rotationMin, 0);
     const span = Math.max(rotationMax - rotationMin, 0);
+    const maxIndex = Math.max(images.length - 1, 1);
+    const minimumSeparation = 0.35; // degrees – keep angles visually distinct
+    const usedAngles: number[] = [];
+
     return images.map((img, i) => {
-      const rnd = lcg(seedFromString(img.src + ':' + i));
-      // Ensure each image gets a distinct angle by spreading them across the range
-      // Use index to bias alternating directions for better visibility
-      const angleDirection = i % 2 === 0 ? 1 : -1;
-      const angleVariation = rnd() * span + range;
-      const angle = angleVariation * angleDirection;
-      const tx = (rnd() * 4 - 2) * (i % 2 === 0 ? 1 : -1); // more pronounced horizontal offset, alternating
-      return { angle, tx };
+      const rnd = lcg(seedFromString(`${img.src}:${i}:${hoverCycle}`));
+      const direction = i % 2 === 0 ? 1 : -1;
+      const verticalDirection = ((i + hoverCycle) % 4 < 2 ? 1 : -1);
+      const depth = i / maxIndex;
+      const progression = sanitizedMin + span * depth;
+
+      const bias = Math.sin((hoverCycle + i) * 1.13) * 0.2;
+      let angle = direction * (progression + (rnd() - 0.5) * 0.32 + bias);
+
+      if (Math.abs(angle) < sanitizedMin * 0.65) {
+        angle = direction * sanitizedMin * 0.65;
+      }
+
+      // Prevent overlapping angles by nudging until separation is respected
+      let guard = 0;
+      while (
+        usedAngles.some((used) => Math.abs(used - angle) < minimumSeparation) &&
+        guard < 6
+      ) {
+        angle += direction * (minimumSeparation - 0.05);
+        guard += 1;
+      }
+      usedAngles.push(angle);
+
+      const radialScale = 1 + 0.25 * Math.cos((hoverCycle + i) * 0.9);
+      const radialBase = (10 + depth * 24) * radialScale;
+      const lateralJitter = (rnd() - 0.5) * (3 + depth * 3);
+      const offCenter = Math.sin((hoverCycle + i) * 0.7) * 2;
+      let tx = direction * (radialBase + lateralJitter) + offCenter;
+
+      const verticalBase = radialBase * 0.42;
+      const verticalJitter = (rnd() - 0.5) * (2.5 + depth * 2.5);
+      let ty = verticalDirection * (verticalBase + verticalJitter);
+
+      const minLateral = 12 + depth * 8;
+      if (Math.abs(tx) < minLateral) {
+        const lateralSign = tx === 0 ? direction : Math.sign(tx);
+        tx = lateralSign * minLateral;
+      }
+
+      const minVertical = 6 + depth * 6;
+      if (Math.abs(ty) < minVertical) {
+        const verticalSign = ty === 0 ? verticalDirection : Math.sign(ty);
+        ty = verticalSign * minVertical;
+      }
+
+      return { angle, tx, ty };
     });
-  }, [images, rotationMin, rotationMax]);
+  }, [images, rotationMin, rotationMax, hoverCycle]);
 
   const topIndex = order[0] ?? 0;
   const topCaption = images[topIndex]?.caption;
@@ -98,23 +145,50 @@ export function InlineImageStack({
   const containerHeight = height ?? topDimensions?.height ?? 360;
   const containerWidth = topDimensions ? topDimensions.width : undefined;
 
+  // Calculate scaled mobile height
+  const scaledMobileHeight = mobileHeight ?? Math.round(containerHeight * 0.75);
+
   const handleClick = () => {
-    if (fadingTop || order.length < 2) return;
-    setFadingTop(true);
+    if (fadingTop || movingUp || order.length < 2) return;
+    setMovingUp(true);
+    // Start fading partway through the upward movement
+    setTimeout(() => setFadingTop(true), animDuration * 400);
   };
   const afterFade = () => {
     setOrder(([first, ...rest]) => [...rest, first]);
     setFadingTop(false);
+    setMovingUp(false);
   };
 
   const animDuration = duration ?? (reduceMotion ? 0 : 0.4);
   const ease = [0.25, 0.46, 0.45, 0.94] as const;
 
   return (
-    <InlineMediaFrame pageType={pageType} caption={topCaption}>
-      <div className="relative w-full" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
+    <InlineMediaFrame
+      pageType={pageType}
+      caption={topCaption}
+      noBorder={true}
+      captionClassName="mt-[3.25rem] md:mt-12"
+      containerClassName="mt-12 mb-10 md:mt-16 md:mb-18"
+    >
+      <div
+        className="relative w-full scale-[0.75] md:scale-100 [--stack-border-thickness:10.6667px] md:[--stack-border-thickness:8px]"
+        style={{
+          transformOrigin: 'top center',
+          '--mobile-height': `${scaledMobileHeight}px`,
+          '--desktop-height': `${containerHeight}px`,
+          height: 'var(--mobile-height)',
+          marginTop: '3rem',
+          marginBottom: '2rem',
+        } as React.CSSProperties & { '--mobile-height': string; '--desktop-height': string }}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => {
+          setHovered(false);
+          setHoverCycle((cycle) => cycle + 1);
+        }}
+      >
         <div
-          className="relative w-full mx-auto"
+          className="group relative w-full mx-auto"
           style={{
             height: containerHeight,
             maxWidth: containerWidth,
@@ -124,12 +198,13 @@ export function InlineImageStack({
             const img = images[idx];
             const imgDims = imageDimensions.get(idx);
             const z = images.length - pos;
-            const base = baseTransforms[idx] ?? { angle: 0, tx: 0 };
+            const base = baseTransforms[idx] ?? { angle: 0, tx: 0, ty: 0 };
             const isTop = pos === 0;
             const isSecond = pos === 1;
             const targetRotate = hovered ? 0 : base.angle;
             const targetX = hovered ? 0 : base.tx;
-            const targetOpacity = isTop && fadingTop ? 0 : isSecond && fadingTop ? 1 : 1;
+            const targetY = hovered ? 0 : base.ty;
+            const targetOpacity = isTop && fadingTop ? 0 : 1;
 
             // Calculate dimensions for each image to maintain aspect ratio
             let imgWidth = '100%';
@@ -159,10 +234,10 @@ export function InlineImageStack({
                   marginLeft: `-${parseFloat(imgWidth) / 2}${imgWidth.includes('px') ? 'px' : '%'}`,
                   marginTop: `-${parseFloat(imgHeight) / 2}${imgHeight.includes('px') ? 'px' : '%'}`,
                 }}
-                initial={{ opacity: 1, y: 0, rotate: targetRotate, x: targetX }}
+                initial={{ opacity: 1, y: targetY, rotate: targetRotate, x: targetX }}
                 animate={{
                   opacity: targetOpacity,
-                  y: isTop && fadingTop ? -28 : 0,
+                  y: isTop && (movingUp || fadingTop) ? -28 : targetY,
                   rotate: targetRotate,
                   x: targetX,
                 }}

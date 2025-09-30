@@ -25,12 +25,12 @@ function ProductivityAIContent(_: ProductivityAIPageProps) {
         {
           type: 'text',
           content:
-            'Artificial intelligence arrives as a natural progression. Another invisible layer promising clarity and offering convenience. But beneath the startup pitch of fewer clicks, seamless calendars, and glossy summaries, I continue toquestion whether these systems help make us better or just give permission to delegate our better judgement.',
+            'Artificial intelligence arrives as a natural progression. Another invisible layer promising clarity and offering convenience. But beneath the startup pitch of fewer clicks, seamless calendars, and glossy summaries, I continue to question whether these systems help make us better or just give permission to delegate our better judgement.',
         },
         {
           type: 'text',
           content:
-            "A sense of clarity comes from alignment and the feeling that my time and attention are going to the right things. At its best, AI nudges me there. At its worst, it misses the point entirely. When AI surfaces priorities without knowing the week you're having or generates code that ignores the project's architecture, the output might check out, but the experience falls flat.",
+            "A sense of clarity comes from the alignment of time and attention going to the right things. At its best, AI nudges me there. At its worst, it misses the point entirely. When AI surfaces priorities without knowing the week you're having or generates code that ignores the project's architecture, the output might check out, but the experience falls flat.",
         },
         {
           type: 'video',
@@ -45,19 +45,8 @@ function ProductivityAIContent(_: ProductivityAIPageProps) {
         },
         {
           type: 'quote',
-          quote: 'That time in between is \"Ma\".',
-        },
-        {
-          type: 'text',
-          content: 'Emptiness.',
-        },        {
-          type: 'quote',
-          quote: "If you make non-stop action with no breathing space, it's just busy... you get numb.",
-        },
-        {
-          type: 'text',
-          content:
-            "Ironically, we betrayed this teaching (and probably violated intellectual property law) when we appropriated Ghibli's aesthetic using GPT-4o's image generation capabilities. A powerful tool for consistent aesthetic output, no doubt, but devoid of the ideologies which birthed the aesthetic in the first place.",
+          quote:
+            'That time in between is \"Ma\".\n\nEmptiness.\n\nIf you make non-stop action with no breathing space, \nit\'s just busy... you get numb.',
         },
         {
           type: 'text',
@@ -78,6 +67,11 @@ function ProductivityAIContent(_: ProductivityAIPageProps) {
           type: 'quote',
           quote: "My dear Degas, poems are not made out of ideas. They\’re made out of words.",
           cite: 'Stéphane Mallarmé',
+        },
+        {
+          type: 'text',
+          content:
+            'LLMs have given life to any and all ideas, and while we might be using words to bring them to life, the earned feeling that comes with the time and labor of creation is completely missing.',
         },
         {
           type: 'text',

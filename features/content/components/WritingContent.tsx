@@ -14,6 +14,14 @@ export type ContentBlock =
       };
     }
   | {
+      type: 'imageNoBorder';
+      image: {
+        src: string;
+        alt: string;
+        caption?: string;
+      };
+    }
+  | {
       type: 'video';
       video: {
         src: string;
@@ -34,6 +42,7 @@ export type ContentBlock =
       type: 'imageStack';
       stack: { src: string; alt: string; caption?: string }[];
       height?: number;
+      mobileHeight?: number;
     };
 
 interface WritingContentProps {
@@ -73,6 +82,29 @@ export function WritingContent({ blocks }: WritingContentProps) {
           );
         }
 
+        if (block.type === 'imageNoBorder') {
+          const { image } = block;
+          return (
+            <div key={`image-no-border-${index}`} className="mt-10 mb-6 w-full md:w-[115%] md:-ml-[7.5%]">
+              <div className="relative w-full overflow-hidden h-[300px] md:h-[500px]">
+                <img
+                  src={image.src}
+                  alt={image.alt}
+                  className="w-full h-full object-cover"
+                  style={{ objectPosition: 'center 70%' }}
+                  loading="lazy"
+                  decoding="async"
+                />
+                {image.caption && (
+                  <figcaption className="absolute -bottom-3 md:bottom-1 left-1/2 -translate-x-1/2 text-sm text-[#9c9c9b] leading-relaxed text-center whitespace-nowrap">
+                    {image.caption}
+                  </figcaption>
+                )}
+              </div>
+            </div>
+          );
+        }
+
         if (block.type === 'video') {
           const { video } = block;
           return <InlineVideo key={`video-${index}`} src={video.src} caption={video.caption} />;
@@ -86,7 +118,14 @@ export function WritingContent({ blocks }: WritingContentProps) {
               className="mt-6 mb-4 pl-4 border-l-2"
               style={{ borderColor: 'var(--portfolio-border)' }}
             >
-              <blockquote className="portfolio-text halbfett text-[#9c9c9b]">{quote}</blockquote>
+              <blockquote className="portfolio-text halbfett text-[#9c9c9b]">
+                {quote.split('\n').map((line, lineIndex, arr) => (
+                  <span key={`${index}-line-${lineIndex}`}>
+                    {line}
+                    {lineIndex < arr.length - 1 && <br />}
+                  </span>
+                ))}
+              </blockquote>
               {cite && (
                 <figcaption className="mt-2 text-sm text-[#9c9c9b]">— {cite}</figcaption>
               )}
@@ -124,6 +163,7 @@ export function WritingContent({ blocks }: WritingContentProps) {
               images={block.stack}
               pageType="writing"
               height={block.height}
+              mobileHeight={block.mobileHeight}
             />
           );
         }

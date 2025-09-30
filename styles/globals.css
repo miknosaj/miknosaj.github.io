@@ -553,3 +553,10 @@ picture,
 .page-transition-container {
   min-height: 100vh;
 }
+
+/* Responsive image stack height */
+@media (min-width: 768px) {
+  .scale-\[0\.75\].md\:scale-100 {
+    height: var(--desktop-height) !important;
+  }
+}
