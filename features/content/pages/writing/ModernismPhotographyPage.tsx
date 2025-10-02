@@ -41,6 +41,14 @@ function ModernismPhotographyContent(_: ModernismPhotographyPageProps) {
     };
   }, [isDarkMode]);
 
+  // Update theme-color meta tag for mobile browsers
+  useEffect(() => {
+    const themeColorMeta = document.querySelector('meta[name="theme-color"][media]');
+    if (themeColorMeta) {
+      themeColorMeta.setAttribute('content', isDarkMode ? '#000000' : '#ffffff');
+    }
+  }, [isDarkMode]);
+
   return (
     <>
       <div
@@ -48,10 +56,13 @@ function ModernismPhotographyContent(_: ModernismPhotographyPageProps) {
           transition: 'background-color 900ms cubic-bezier(0.4, 0, 0.2, 1)',
           backgroundColor: isDarkMode ? '#000000' : '#ffffff',
           position: 'fixed',
-          top: 'calc(-1 * env(safe-area-inset-top, 0px))',
-          bottom: 'calc(-1 * env(safe-area-inset-bottom, 0px))',
-          left: 'calc(-1 * env(safe-area-inset-left, 0px))',
-          right: 'calc(-1 * env(safe-area-inset-right, 0px))',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          width: '100vw',
+          height: '100vh',
+          minHeight: '100lvh',
           zIndex: -1,
         }}
       />

@@ -129,14 +129,20 @@ html.fonts-loaded body {
     @apply border-border outline-ring/50;
   }
 
+  html {
+    background-color: var(--background);
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+  }
+
   body {
     background-color: var(--background);
     color: var(--foreground);
     transition: background-color 0.3s ease, color 0.3s ease;
-  }
-
-  html {
-    background-color: var(--background);
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
   }
 }
 
