@@ -520,7 +520,7 @@ picture,
 /* Mobile responsive behavior */
 @media (max-width: 767px) {
   body, html {
-    overflow-x: visible !important;
+    overflow-x: hidden !important;
     overflow-y: auto !important;
   }
   /* Ensure the React root does not introduce an additional scroller */
@@ -544,6 +544,10 @@ picture,
   .inline-image-container {
     width: 100% !important;
     margin-left: 0 !important;
+  }
+
+  .inline-image-container.no-mobile-overflow {
+    overflow: hidden !important;
   }
 }
 

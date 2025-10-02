@@ -48,13 +48,10 @@ function ModernismPhotographyContent(_: ModernismPhotographyPageProps) {
           transition: 'background-color 900ms cubic-bezier(0.4, 0, 0.2, 1)',
           backgroundColor: isDarkMode ? '#000000' : '#ffffff',
           position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          width: '100vw',
-          height: '100vh',
-          minHeight: '-webkit-fill-available',
+          top: 'calc(-1 * env(safe-area-inset-top, 0px))',
+          bottom: 'calc(-1 * env(safe-area-inset-bottom, 0px))',
+          left: 'calc(-1 * env(safe-area-inset-left, 0px))',
+          right: 'calc(-1 * env(safe-area-inset-right, 0px))',
           zIndex: -1,
         }}
       />
@@ -253,7 +250,7 @@ function ModernismPhotographyContent(_: ModernismPhotographyPageProps) {
           ]}
         />
 
-        <figure className="relative my-12 inline-image-container w-full md:w-[115%] md:-ml-[7.5%]">
+        <figure className="relative my-12 inline-image-container w-full md:w-[115%] md:-ml-[7.5%] no-mobile-overflow">
           <div
             className="relative w-full overflow-hidden"
             style={{
