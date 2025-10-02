@@ -52,6 +52,9 @@ function ModernismPhotographyContent(_: ModernismPhotographyPageProps) {
           left: 0,
           right: 0,
           bottom: 0,
+          width: '100vw',
+          height: '100vh',
+          minHeight: '-webkit-fill-available',
           zIndex: -1,
         }}
       />
@@ -252,7 +255,7 @@ function ModernismPhotographyContent(_: ModernismPhotographyPageProps) {
 
         <figure className="relative my-12 inline-image-container w-full md:w-[115%] md:-ml-[7.5%]">
           <div
-            className="relative w-full overflow-visible"
+            className="relative w-full overflow-hidden"
             style={{
               boxShadow: isDarkMode
                 ? '0px 2px 8px 0px rgba(255, 255, 255, 0.15)'
