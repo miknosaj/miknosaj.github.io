@@ -8,8 +8,8 @@ import photoFour from '@/assets/content/modernism-photography/phomo4.webp';
 import eggleston from '@/assets/content/modernism-photography/Eggleston.webp';
 import winograndFamilyOfMan from '@/assets/content/modernism-photography/family-of-man_winogrand.webp';
 import winograndFamilyOfManFull from '@/assets/content/modernism-photography/family-of-man_winogrand-full.webp';
-import nanBw from '@/assets/content/modernism-photography/Nan-bw.webp';
-import nanColor from '@/assets/content/modernism-photography/Nan-color.webp';
+import nanBw from '@/assets/content/modernism-photography/nan-bw.webp';
+import nanColor from '@/assets/content/modernism-photography/nan-color.webp';
 import { withContentPage } from '../../components/withContentPage';
 import { imageDimensionsCache } from '@/shared/utils/imageDimensionsCache';
 import { LightSwitch } from '@/shared/ui/media/LightSwitch';
@@ -22,6 +22,12 @@ interface ModernismPhotographyPageProps {
 function ModernismPhotographyContent(_: ModernismPhotographyPageProps) {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const themeWrapperRef = useRef<HTMLDivElement | null>(null);
+  const metaRefs = useRef<{
+    theme?: HTMLMetaElement;
+    status?: HTMLMetaElement;
+    fallbackTheme?: { element: HTMLMetaElement; original: string | null };
+    fallbackStatus?: { element: HTMLMetaElement; original: string | null };
+  }>({});
 
   // Preload critical images
   useEffect(() => {
@@ -41,18 +47,92 @@ function ModernismPhotographyContent(_: ModernismPhotographyPageProps) {
     };
   }, [isDarkMode]);
 
-  // Update theme-color meta tag for mobile browsers (Chrome and Safari)
   useEffect(() => {
-    // Update primary theme-color (without media query) for dynamic updates
-    const themeColorMeta = document.querySelector('meta[name="theme-color"]:not([media])');
-    if (themeColorMeta) {
-      themeColorMeta.setAttribute('content', isDarkMode ? '#000000' : '#ffffff');
+    if (typeof document === 'undefined') {
+      return;
     }
 
-    // Update Safari-specific status bar style
-    const statusBarMeta = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
-    if (statusBarMeta) {
-      statusBarMeta.setAttribute('content', isDarkMode ? 'black-translucent' : 'default');
+    const ensureMeta = (id: string, attributes: Record<string, string>) => {
+      let metaEl = document.head.querySelector<HTMLMetaElement>(`#${id}`);
+      let created = false;
+
+      if (!metaEl) {
+        metaEl = document.createElement('meta');
+        metaEl.id = id;
+        document.head.appendChild(metaEl);
+        created = true;
+      }
+
+      Object.entries(attributes).forEach(([attr, value]) => {
+        metaEl?.setAttribute(attr, value);
+      });
+
+      return { element: metaEl, created };
+    };
+
+    const themeResult = ensureMeta('modernism-theme-color', { name: 'theme-color' });
+    const statusResult = ensureMeta('modernism-status-style', {
+      name: 'apple-mobile-web-app-status-bar-style',
+    });
+
+    const fallbackThemeMeta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]:not([media])');
+    const fallbackStatusMeta = document.querySelector<HTMLMetaElement>('meta[name="apple-mobile-web-app-status-bar-style"]');
+
+    metaRefs.current.fallbackTheme = fallbackThemeMeta
+      ? { element: fallbackThemeMeta, original: fallbackThemeMeta.getAttribute('content') }
+      : undefined;
+    metaRefs.current.fallbackStatus = fallbackStatusMeta
+      ? { element: fallbackStatusMeta, original: fallbackStatusMeta.getAttribute('content') }
+      : undefined;
+
+    metaRefs.current.theme = themeResult.element ?? undefined;
+    metaRefs.current.status = statusResult.element ?? undefined;
+
+    return () => {
+      if (themeResult.created && themeResult.element) {
+        themeResult.element.remove();
+      }
+      if (statusResult.created && statusResult.element) {
+        statusResult.element.remove();
+      }
+      if (metaRefs.current.fallbackTheme) {
+        const { element, original } = metaRefs.current.fallbackTheme;
+        if (element) {
+          if (original !== null) {
+            element.setAttribute('content', original);
+          } else {
+            element.removeAttribute('content');
+          }
+        }
+      }
+      if (metaRefs.current.fallbackStatus) {
+        const { element, original } = metaRefs.current.fallbackStatus;
+        if (element) {
+          if (original !== null) {
+            element.setAttribute('content', original);
+          } else {
+            element.removeAttribute('content');
+          }
+        }
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    const themeColor = isDarkMode ? '#000000' : '#ffffff';
+    const statusStyle = isDarkMode ? 'black-translucent' : 'default';
+
+    if (metaRefs.current.theme) {
+      metaRefs.current.theme.setAttribute('content', themeColor);
+    }
+    if (metaRefs.current.status) {
+      metaRefs.current.status.setAttribute('content', statusStyle);
+    }
+    if (metaRefs.current.fallbackTheme?.element) {
+      metaRefs.current.fallbackTheme.element.setAttribute('content', themeColor);
+    }
+    if (metaRefs.current.fallbackStatus?.element) {
+      metaRefs.current.fallbackStatus.element.setAttribute('content', statusStyle);
     }
   }, [isDarkMode]);
 
@@ -63,13 +143,10 @@ function ModernismPhotographyContent(_: ModernismPhotographyPageProps) {
           transition: 'background-color 900ms cubic-bezier(0.4, 0, 0.2, 1)',
           backgroundColor: isDarkMode ? '#000000' : '#ffffff',
           position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          width: '100vw',
-          height: '100vh',
-          minHeight: '100lvh',
+          top: 'calc(-1 * env(safe-area-inset-top, 0px))',
+          bottom: 'calc(-1 * env(safe-area-inset-bottom, 0px))',
+          left: 'calc(-1 * env(safe-area-inset-left, 0px))',
+          right: 'calc(-1 * env(safe-area-inset-right, 0px))',
           zIndex: -1,
         }}
       />
