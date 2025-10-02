@@ -41,11 +41,18 @@ function ModernismPhotographyContent(_: ModernismPhotographyPageProps) {
     };
   }, [isDarkMode]);
 
-  // Update theme-color meta tag for mobile browsers
+  // Update theme-color meta tag for mobile browsers (Chrome and Safari)
   useEffect(() => {
-    const themeColorMeta = document.querySelector('meta[name="theme-color"][media]');
+    // Update primary theme-color (without media query) for dynamic updates
+    const themeColorMeta = document.querySelector('meta[name="theme-color"]:not([media])');
     if (themeColorMeta) {
       themeColorMeta.setAttribute('content', isDarkMode ? '#000000' : '#ffffff');
+    }
+
+    // Update Safari-specific status bar style
+    const statusBarMeta = document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]');
+    if (statusBarMeta) {
+      statusBarMeta.setAttribute('content', isDarkMode ? 'black-translucent' : 'default');
     }
   }, [isDarkMode]);
 
