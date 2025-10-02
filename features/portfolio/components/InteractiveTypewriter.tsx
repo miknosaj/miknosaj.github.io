@@ -18,8 +18,8 @@ interface InteractiveTypewriterProps {
 
 const DEFAULT_SPEED = 4;
 const TYPEWRITER_DELAY_MS = 300;
-const MOTION_DURATION_FAST = 0.3;
-const MOTION_EASE = [0.25, 0.46, 0.45, 0.94] as const;
+const MOTION_DURATION_FAST = 0.25; // Keep under 300ms per tip #6
+const MOTION_EASE = [0.22, 1, 0.36, 1] as const; // ease-out curve per tip #4
 
 export function InteractiveTypewriter({
   content,
@@ -131,7 +131,8 @@ export function InteractiveTypewriter({
             onKeyDown={onKeyDown}
             aria-expanded={isActive}
             aria-controls={controlsId}
-            disabled={!isFullyVisible}
+            aria-disabled={!isFullyVisible}
+            tabIndex={isFullyVisible ? 0 : -1}
           >
             {visibleContent}
           </button>
@@ -170,11 +171,12 @@ export function InteractiveTypewriter({
 
       {isModularGalleryActive && galleryId && (
         <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: galleryHeight }}
+          initial={{ opacity: 0, height: 0, scale: 0.95 }}
+          animate={{ opacity: 1, height: galleryHeight, scale: 1 }}
           transition={{
             height: { duration: MOTION_DURATION_FAST, ease: MOTION_EASE },
-            opacity: { duration: MOTION_DURATION_FAST, delay: 0.15 },
+            opacity: { duration: MOTION_DURATION_FAST, delay: 0.1 },
+            scale: { duration: MOTION_DURATION_FAST, ease: MOTION_EASE },
           }}
           className="mt-6 w-full relative overflow-visible"
           style={{

@@ -1,6 +1,8 @@
 import { InlineImage } from '@/shared/ui/media/InlineImage';
+import { InlineImageWithMagnifier } from '@/shared/ui/media/InlineImageWithMagnifier';
 import { InlineVideo } from '@/shared/ui/media/InlineVideo';
 import { InlineImageStack } from '@/shared/ui/media/InlineImageStack';
+import { InlineImageThemeToggle } from '@/shared/ui/media/InlineImageThemeToggle';
 
 export type ContentBlock =
   | { type: 'text'; content: string }
@@ -14,12 +16,31 @@ export type ContentBlock =
       };
     }
   | {
+      type: 'imageWithMagnifier';
+      image: {
+        src: string;
+        alt: string;
+        caption?: string;
+        magnifierSrc?: string;
+      };
+    }
+  | {
       type: 'imageNoBorder';
       image: {
         src: string;
         alt: string;
         caption?: string;
       };
+    }
+  | {
+      type: 'imageThemeToggle';
+      image: {
+        src: string;
+        darkSrc: string;
+        alt: string;
+        caption?: string;
+      };
+      onToggle: () => void;
     }
   | {
       type: 'video';
@@ -57,7 +78,13 @@ export function WritingContent({ blocks }: WritingContentProps) {
           return (
             <div key={`section-${index}`} className="flex items-center gap-3 w-full mt-8 mb-2 overflow-visible">
               <span className="portfolio-text halbfett whitespace-nowrap">{block.title}</span>
-              <span className="flex-1 border-t" style={{ borderColor: 'var(--portfolio-border)' }} />
+              <span
+                className="flex-1 border-t"
+                style={{
+                  borderColor: 'var(--portfolio-border)',
+                  transition: 'border-color 900ms cubic-bezier(0.4, 0, 0.2, 1)'
+                }}
+              />
             </div>
           );
         }
@@ -76,6 +103,20 @@ export function WritingContent({ blocks }: WritingContentProps) {
               key={`image-${index}`}
               src={image.src}
               alt={image.alt}
+              pageType="writing"
+              caption={image.caption}
+            />
+          );
+        }
+
+        if (block.type === 'imageWithMagnifier') {
+          const { image } = block;
+          return (
+            <InlineImageWithMagnifier
+              key={`image-magnifier-${index}`}
+              src={image.src}
+              alt={image.alt}
+              magnifierSrc={image.magnifierSrc}
               pageType="writing"
               caption={image.caption}
             />
@@ -102,6 +143,21 @@ export function WritingContent({ blocks }: WritingContentProps) {
                 )}
               </div>
             </div>
+          );
+        }
+
+        if (block.type === 'imageThemeToggle') {
+          const { image, onToggle } = block;
+          return (
+            <InlineImageThemeToggle
+              key={`image-theme-toggle-${index}`}
+              src={image.src}
+              darkSrc={image.darkSrc}
+              alt={image.alt}
+              pageType="writing"
+              caption={image.caption}
+              onToggle={onToggle}
+            />
           );
         }
 

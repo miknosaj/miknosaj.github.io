@@ -59,6 +59,21 @@ export function InlineImageStack({
   });
   const reduceMotion = useReducedMotion();
 
+  // Auto-reset hover state after 5 seconds on mobile/touch devices
+  useEffect(() => {
+    if (hovered) {
+      // Only auto-reset on mobile (touch devices)
+      const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+      if (isTouchDevice) {
+        const timeout = setTimeout(() => {
+          setHovered(false);
+          setHoverCycle((cycle) => cycle + 1);
+        }, 5000);
+        return () => clearTimeout(timeout);
+      }
+    }
+  }, [hovered]);
+
   // Load image dimensions using cache
   useEffect(() => {
     const loadDimensions = async () => {
@@ -160,8 +175,8 @@ export function InlineImageStack({
     setMovingUp(false);
   };
 
-  const animDuration = duration ?? (reduceMotion ? 0 : 0.4);
-  const ease = [0.25, 0.46, 0.45, 0.94] as const;
+  const animDuration = duration ?? (reduceMotion ? 0 : 0.28); // Keep under 300ms per tip #6
+  const ease = [0.22, 1, 0.36, 1] as const; // ease-out curve per tip #4
 
   return (
     <InlineMediaFrame
@@ -200,9 +215,10 @@ export function InlineImageStack({
             const z = images.length - pos;
             const base = baseTransforms[idx] ?? { angle: 0, tx: 0, ty: 0 };
             const isTop = pos === 0;
+            // When hovered: remove rotation but keep slight scatter (less on x, more on y)
             const targetRotate = hovered ? 0 : base.angle;
-            const targetX = hovered ? 0 : base.tx;
-            const targetY = hovered ? 0 : base.ty;
+            const targetX = hovered ? base.tx * 0.2 : base.tx;
+            const targetY = hovered ? base.ty * 0.35 : base.ty;
             const targetOpacity = isTop && fadingTop ? 0 : 1;
 
             // Calculate dimensions for each image to maintain aspect ratio

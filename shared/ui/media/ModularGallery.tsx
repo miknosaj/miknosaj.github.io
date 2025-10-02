@@ -14,7 +14,7 @@ interface AnimatedImageProps {
 }
 
 function AnimatedImage({ image, index, gallery, disableAnimations }: AnimatedImageProps) {
-  const defaultAnimations = { stagger: 0.2, duration: 0.6, ease: 'easeOut' } as const;
+  const defaultAnimations = { stagger: 0.08, duration: 0.25, ease: 'easeOut' } as const; // Faster stagger & duration per tip #6
   const animations = gallery.animations ?? defaultAnimations;
   const delay = index * animations.stagger;
 
@@ -28,8 +28,8 @@ function AnimatedImage({ image, index, gallery, disableAnimations }: AnimatedIma
     ? finalState
     : {
         opacity: 0,
-        scale: 1.1,
-        rotate: (image.position?.rotation ?? 0) - 5,
+        scale: 0.95, // Start from 0.95 instead of 1.1 per tip #2
+        rotate: (image.position?.rotation ?? 0) - 3, // Smaller rotation difference
       };
 
   const transition = disableAnimations

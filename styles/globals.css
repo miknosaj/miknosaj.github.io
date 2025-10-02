@@ -58,12 +58,12 @@ html.fonts-loaded body {
   --portfolio-muted: #9c9c9b;
   --portfolio-border: #f2f2f2;
   --portfolio-background-active: rgba(255, 255, 255, 0.8);
-  
+
   /* Portfolio typography system */
   --portfolio-font-size: 14px;
   --portfolio-line-height: 21px;
   --portfolio-font-family: 'Sohne', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  
+
   /* Interactive animation timings */
   --typewriter-speed: 4; /* milliseconds per character */
   --typewriter-cursor-width: 2px;
@@ -74,8 +74,8 @@ html.fonts-loaded body {
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
+  --background: #000000;
+  --foreground: #e5e5e5;
 
   --primary: oklch(0.985 0 0);
   --primary-foreground: oklch(0.205 0 0);
@@ -90,6 +90,13 @@ html.fonts-loaded body {
   --ring: oklch(0.439 0 0);
   --font-weight-medium: 500;
   --font-weight-normal: 400;
+
+  /* Portfolio dark mode overrides */
+  --portfolio-primary: #6b8aff;
+  --portfolio-text: #e5e5e5;
+  --portfolio-muted: #a0a0a0;
+  --portfolio-border: #2a2a2a;
+  --portfolio-background-active: rgba(0, 0, 0, 0.8);
 
 }
 
@@ -123,7 +130,13 @@ html.fonts-loaded body {
   }
 
   body {
-    @apply bg-background text-foreground;
+    background-color: var(--background);
+    color: var(--foreground);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  html {
+    background-color: var(--background);
   }
 }
 
@@ -253,10 +266,52 @@ body {
   );
   pointer-events: none;
   z-index: 20;
+  opacity: 1;
+  transition: opacity 900ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.content-page-container::after {
+  content: '';
+  position: fixed;
+  top: calc(-1 * env(safe-area-inset-top, 0px));
+  left: 0;
+  width: 100%;
+  height: calc(6rem + env(safe-area-inset-top, 0px));
+  background: linear-gradient(
+    180deg,
+    #000000 0%,
+    hsla(0, 0%, 0%, 0.738) 19%,
+    hsla(0, 0%, 0%, 0.541) 34%,
+    hsla(0, 0%, 0%, 0.382) 47%,
+    hsla(0, 0%, 0%, 0.278) 56.5%,
+    hsla(0, 0%, 0%, 0.194) 65%,
+    hsla(0, 0%, 0%, 0.126) 73%,
+    hsla(0, 0%, 0%, 0.075) 80.2%,
+    hsla(0, 0%, 0%, 0.042) 86.1%,
+    hsla(0, 0%, 0%, 0.021) 91%,
+    hsla(0, 0%, 0%, 0.008) 95.2%,
+    hsla(0, 0%, 0%, 0.002) 98.2%,
+    hsla(0, 0%, 0%, 0) 100%
+  );
+  pointer-events: none;
+  z-index: 21;
+  opacity: 0;
+  transition: opacity 900ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark .content-page-container::before,
+.content-page-container.modernism-dark::before {
+  opacity: 0;
+}
+
+.dark .content-page-container::after,
+.content-page-container.modernism-dark::after {
+  opacity: 1;
 }
 
 @media (max-width: 767px) {
-  .content-page-container::before {
+  .content-page-container::before,
+  .content-page-container::after {
     content: none;
   }
 }
@@ -294,7 +349,7 @@ body {
 .portfolio-link {
   color: var(--portfolio-primary);
   cursor: pointer;
-  transition: color 0.3s ease;
+  transition: color 0.2s ease-out;
 }
 
 .portfolio-link:hover:not(.portfolio-link--disabled) {
@@ -360,7 +415,7 @@ body {
   height: var(--portfolio-line-height);
   padding: 0.01rem 0.3rem 0;
   border-radius: 0.25rem;
-  transition: all 0.3s ease;
+  transition: background-color 0.2s ease-out;
   font-size: var(--portfolio-font-size);
   line-height: var(--portfolio-line-height);
   font-weight: var(--font-weight-medium);
@@ -388,10 +443,12 @@ body {
   font-size: var(--portfolio-font-size);
   line-height: var(--portfolio-line-height);
   font-family: var(--portfolio-font-family);
+  transition: color 900ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .portfolio-text--muted {
   color: var(--portfolio-muted);
+  transition: color 900ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Background transitions */
