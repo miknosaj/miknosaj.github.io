@@ -3,7 +3,6 @@ import { InlineMediaFrame } from './InlineMedia';
 
 interface InlineImageThemeToggleProps {
   src: string;
-  darkSrc: string;
   alt: string;
   pageType?: 'photography' | 'writing';
   caption?: string;
@@ -13,7 +12,6 @@ interface InlineImageThemeToggleProps {
 
 export function InlineImageThemeToggle({
   src,
-  darkSrc,
   alt,
   pageType = 'writing',
   caption,

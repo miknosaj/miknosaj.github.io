@@ -152,7 +152,6 @@ export function WritingContent({ blocks }: WritingContentProps) {
             <InlineImageThemeToggle
               key={`image-theme-toggle-${index}`}
               src={image.src}
-              darkSrc={image.darkSrc}
               alt={image.alt}
               pageType="writing"
               caption={image.caption}
