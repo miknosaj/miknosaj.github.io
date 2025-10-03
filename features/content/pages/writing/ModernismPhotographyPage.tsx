@@ -29,7 +29,6 @@ import { withContentPage } from '../../components/withContentPage';
 import { imageDimensionsCache } from '@/shared/utils/imageDimensionsCache';
 import { LightSwitch } from '@/shared/ui/media/LightSwitch';
 import type { StackImage } from '@/shared/ui/media/InlineImageStack';
-import { InlineImageSpreadStack } from '@/shared/ui/media/InlineImageSpreadStack';
 
 const becherArchiveImages: StackImage[] = [
   { src: bh1, alt: 'Becher contact sheet archive, folder 1' },

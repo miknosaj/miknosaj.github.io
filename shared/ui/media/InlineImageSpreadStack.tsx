@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState, type CSSProperties, type KeyboardEvent } from 'react';
 import { motion } from 'framer-motion';
-import { InlineMediaFrame } from './InlineMedia';
 import type { StackImage } from './InlineImageStack';
 import { imageDimensionsCache, type ImageDimensions } from '@/shared/utils/imageDimensionsCache';
 
@@ -48,7 +47,6 @@ const FALLBACK_ASPECT = 1.35;
 
 export function InlineImageSpreadStack({
   images,
-  pageType = 'writing',
   caption,
   rows,
   cols,
