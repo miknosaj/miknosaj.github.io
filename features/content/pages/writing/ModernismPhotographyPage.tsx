@@ -354,7 +354,7 @@ function ModernismPhotographyContent(_: ModernismPhotographyPageProps) {
 
         <figure className="relative my-12 inline-image-container w-full md:w-[115%] md:-ml-[7.5%] no-mobile-overflow">
           <div
-            className="relative w-full overflow-hidden"
+            className="relative w-full"
             style={{
               boxShadow: isDarkMode
                 ? '0px 2px 8px 0px rgba(255, 255, 255, 0.15)'
