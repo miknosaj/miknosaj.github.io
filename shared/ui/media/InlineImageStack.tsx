@@ -45,6 +45,7 @@ export function InlineImageStack({
   const [hovered, setHovered] = useState(false);
   const [fadingTop, setFadingTop] = useState(false);
   const [movingUp, setMovingUp] = useState(false);
+  const [enteringBack, setEnteringBack] = useState(false);
   const [hoverCycle, setHoverCycle] = useState(0);
   const [imageDimensions, setImageDimensions] = useState<Map<number, ImageDimensions>>(() => {
     // Try to get cached dimensions immediately
@@ -165,9 +166,10 @@ export function InlineImageStack({
 
   const handleClick = () => {
     if (fadingTop || movingUp || order.length < 2) return;
+
+    // Phase 1: Move top card up and fade out
     setMovingUp(true);
-    // Start fading partway through the upward movement
-    setTimeout(() => setFadingTop(true), animDuration * 400);
+    setTimeout(() => setFadingTop(true), 50);
 
     // Reset hover state on tap to restart the auto-spread timer
     const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
@@ -177,14 +179,41 @@ export function InlineImageStack({
       setTimeout(() => setHovered(true), 0);
     }
   };
-  const afterFade = () => {
+
+  const afterTopFade = () => {
+    // Phase 2: Cycle order and trigger back entrance quickly
     setOrder(([first, ...rest]) => [...rest, first]);
     setFadingTop(false);
     setMovingUp(false);
+
+    // Trigger back entrance immediately for faster transition
+    setTimeout(() => {
+      setEnteringBack(true);
+      // Reset entering state after animation completes
+      setTimeout(() => setEnteringBack(false), 400);
+    }, 10);
   };
 
-  const animDuration = duration ?? (reduceMotion ? 0 : 0.28); // Keep under 300ms per tip #6
-  const ease = [0.22, 1, 0.36, 1] as const; // ease-out curve per tip #4
+  const animDuration = duration ?? (reduceMotion ? 0 : 0.28);
+
+  // Emil Kowalski style spring curves - snappy and natural
+  const springConfig = {
+    type: 'spring' as const,
+    stiffness: 400,
+    damping: 30,
+  };
+
+  const exitSpring = {
+    type: 'spring' as const,
+    stiffness: 500,
+    damping: 35,
+  };
+
+  const enterSpring = {
+    type: 'spring' as const,
+    stiffness: 300,
+    damping: 28,
+  };
 
   return (
     <InlineMediaFrame
@@ -245,6 +274,19 @@ export function InlineImageStack({
               }
             }
 
+            const isBack = pos === order.length - 1;
+            const isExiting = isTop && (movingUp || fadingTop);
+
+            // Animation states for back card entrance
+            let backY = targetY;
+            let backOpacity = 1;
+
+            if (isBack && enteringBack) {
+              // Start above and fade in, then slide down
+              backY = targetY - 40; // Start higher
+              backOpacity = 0.3; // Start more transparent
+            }
+
             return (
               <motion.div
                 key={`${img.src}-${idx}`}
@@ -257,16 +299,27 @@ export function InlineImageStack({
                   marginLeft: `-${parseFloat(imgWidth) / 2}${imgWidth.includes('px') ? 'px' : '%'}`,
                   marginTop: `-${parseFloat(imgHeight) / 2}${imgHeight.includes('px') ? 'px' : '%'}`,
                 }}
-                initial={{ opacity: 1, y: targetY, rotate: targetRotate, x: targetX }}
+                initial={isBack && enteringBack ? {
+                  opacity: 0,
+                  y: targetY - 25,
+                  rotate: targetRotate,
+                  x: targetX,
+                } : false}
                 animate={{
-                  opacity: targetOpacity,
-                  y: isTop && (movingUp || fadingTop) ? -28 : targetY,
+                  opacity: isExiting ? 0 : (isBack && enteringBack ? 1 : targetOpacity),
+                  y: isExiting ? -40 : (isBack && enteringBack ? targetY : targetY),
                   rotate: targetRotate,
                   x: targetX,
                 }}
-                transition={{ duration: animDuration, ease }}
+                transition={
+                  isExiting
+                    ? exitSpring
+                    : isBack && enteringBack
+                    ? enterSpring
+                    : reduceMotion ? { duration: 0 } : springConfig
+                }
                 onAnimationComplete={() => {
-                  if (isTop && fadingTop) afterFade();
+                  if (isTop && fadingTop) afterTopFade();
                 }}
                 onClick={isTop ? handleClick : undefined}
                 role={isTop ? 'button' : undefined}

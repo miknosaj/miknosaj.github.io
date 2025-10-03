@@ -171,7 +171,10 @@ export function WritingContent({ blocks }: WritingContentProps) {
             <figure
               key={`quote-${index}`}
               className="mt-6 mb-4 pl-4 border-l-2"
-              style={{ borderColor: 'var(--portfolio-border)' }}
+              style={{
+                borderColor: 'var(--portfolio-border)',
+                transition: 'border-color 900ms cubic-bezier(0.4, 0, 0.2, 1)',
+              }}
             >
               <blockquote className="portfolio-text halbfett text-[#9c9c9b]">
                 {quote.split('\n').map((line, lineIndex, arr) => (

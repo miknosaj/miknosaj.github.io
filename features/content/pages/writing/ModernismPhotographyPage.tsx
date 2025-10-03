@@ -352,7 +352,7 @@ function ModernismPhotographyContent(_: ModernismPhotographyPageProps) {
           ]}
         />
 
-        <figure className="relative my-12 inline-image-container w-full md:w-[115%] md:-ml-[7.5%] no-mobile-overflow">
+        <figure className="relative my-12 inline-image-container w-full md:w-[115%] md:-ml-[7.5%]">
           <div
             className="relative w-full"
             style={{
@@ -449,6 +449,19 @@ function ModernismPhotographyContent(_: ModernismPhotographyPageProps) {
             },
           ]}
         />
+
+        <div className="mt-16 mb-12 flex flex-col items-center gap-4">
+          <LightSwitch isOn={!isDarkMode} onToggle={() => setIsDarkMode(!isDarkMode)} />
+          <p
+            className="text-sm text-[#9c9c9b] leading-relaxed text-center"
+            style={{
+              opacity: isDarkMode ? 1 : 0,
+              transition: 'opacity 900ms cubic-bezier(0.4, 0, 0.2, 1)',
+            }}
+          >
+            You can turn the light back on now!
+          </p>
+        </div>
       </div>
     </>
   );

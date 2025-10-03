@@ -554,7 +554,7 @@ picture,
   }
 
   .inline-image-container.no-mobile-overflow {
-    overflow: hidden !important;
+    overflow: visible !important;
   }
 }
 

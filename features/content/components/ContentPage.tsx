@@ -1,5 +1,6 @@
 import { useEffect, type ReactNode } from 'react';
 import { BackArrowIcon } from '@/shared/icons/BackArrowIcon';
+import { PageTransition } from '@/shared/ui/layout/PageTransition';
 
 interface ContentPageProps {
   title: string;
@@ -152,7 +153,8 @@ export function ContentPage({ title, subtitle, description, slug, onNavigateToIn
   useContentPageHead(title, description, slug);
 
   return (
-    <div className="flex flex-col w-full overflow-visible content-page-container">
+    <PageTransition>
+      <div className="flex flex-col w-full overflow-visible content-page-container">
       <div className="w-full mb-8 overflow-visible">
         <button
           onClick={onNavigateToIndex}
@@ -182,6 +184,7 @@ export function ContentPage({ title, subtitle, description, slug, onNavigateToIn
           {children}
         </div>
       </div>
-    </div>
+      </div>
+    </PageTransition>
   );
 }

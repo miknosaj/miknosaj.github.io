@@ -5,6 +5,7 @@ import { Portfolio, usePortfolioState, getPortfolioContent, getBioSections } fro
 import { PageFactory } from '@/features/content';
 import { ErrorPage } from '@/shared/ui/feedback/ErrorPage';
 import { AppLayout } from '@/shared/ui/layout/AppLayout';
+import { PageTransition } from '@/shared/ui/layout/PageTransition';
 
 function RoutedPageFactory({ onNavigateToIndex }: { onNavigateToIndex: () => void }) {
   const { slug } = useParams<{ slug: string }>();
@@ -14,6 +15,33 @@ function RoutedPageFactory({ onNavigateToIndex }: { onNavigateToIndex: () => voi
   }
 
   return <PageFactory slug={slug} onNavigateToIndex={onNavigateToIndex} />;
+}
+
+function IndexPage({
+  portfolioContent,
+  bioSections,
+  portfolioState,
+  onNavigateToPage,
+}: {
+  portfolioContent: ReturnType<typeof getPortfolioContent>;
+  bioSections: ReturnType<typeof getBioSections>;
+  portfolioState: ReturnType<typeof usePortfolioState>;
+  onNavigateToPage: (page: string) => void;
+}) {
+  return (
+    <PageTransition>
+      <Portfolio
+        profile={portfolioContent.profile}
+        bioSections={bioSections}
+        workHistory={portfolioContent.workHistory}
+        awards={portfolioContent.awards}
+        sideProjects={portfolioContent.sideProjects}
+        contact={portfolioContent.contact}
+        {...portfolioState}
+        onNavigateToPage={onNavigateToPage}
+      />
+    </PageTransition>
+  );
 }
 
 export default function App() {
@@ -56,18 +84,12 @@ export default function App() {
           <Route
             path="/"
             element={
-              <div className="animate-[fadeIn_0.3s_ease-in]">
-                <Portfolio
-                  profile={portfolioContent.profile}
-                  bioSections={bioSections}
-                  workHistory={portfolioContent.workHistory}
-                  awards={portfolioContent.awards}
-                  sideProjects={portfolioContent.sideProjects}
-                  contact={portfolioContent.contact}
-                  {...portfolioState}
-                  onNavigateToPage={handleNavigateToPage}
-                />
-              </div>
+              <IndexPage
+                portfolioContent={portfolioContent}
+                bioSections={bioSections}
+                portfolioState={portfolioState}
+                onNavigateToPage={handleNavigateToPage}
+              />
             }
           />
           <Route
