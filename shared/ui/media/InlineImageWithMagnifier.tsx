@@ -20,7 +20,7 @@ export function InlineImageWithMagnifier({
   caption,
   orientation,
   magnifierSize = 180,
-  zoomLevel = 2.5,
+  zoomLevel = 2.7,
 }: InlineImageWithMagnifierProps) {
   const [showMagnifier, setShowMagnifier] = useState(false);
   const [magnifierPosition, setMagnifierPosition] = useState({ x: 0, y: 0 });
@@ -70,7 +70,7 @@ export function InlineImageWithMagnifier({
         {/* Magnifier circle - replaces cursor */}
         {showMagnifier && imgRef.current && (
           <div
-            className="absolute pointer-events-none rounded-full border-2 border-white shadow-[0px_4px_12px_0px_rgba(0,0,0,0.25)] overflow-hidden"
+            className="absolute pointer-events-none rounded-full border-2 border-white shadow-[0px_4px_12px_0px_rgba(0,0,0,0.25)] overflow-hidden bg-black"
             style={{
               width: `${magnifierSize}px`,
               height: `${magnifierSize}px`,
