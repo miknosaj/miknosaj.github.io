@@ -194,14 +194,16 @@ export function InlineImageStack({
     }, 10);
   };
 
-  const animDuration = duration ?? (reduceMotion ? 0 : 0.28);
-
   // Emil Kowalski style spring curves - snappy and natural
   const springConfig = {
     type: 'spring' as const,
     stiffness: 400,
     damping: 30,
   };
+
+  const baseTransition = duration !== undefined
+    ? ({ duration, ease: [0.22, 1, 0.36, 1] as const } as const)
+    : springConfig;
 
   const exitSpring = {
     type: 'spring' as const,
@@ -277,16 +279,6 @@ export function InlineImageStack({
             const isBack = pos === order.length - 1;
             const isExiting = isTop && (movingUp || fadingTop);
 
-            // Animation states for back card entrance
-            let backY = targetY;
-            let backOpacity = 1;
-
-            if (isBack && enteringBack) {
-              // Start above and fade in, then slide down
-              backY = targetY - 40; // Start higher
-              backOpacity = 0.3; // Start more transparent
-            }
-
             return (
               <motion.div
                 key={`${img.src}-${idx}`}
@@ -316,7 +308,7 @@ export function InlineImageStack({
                     ? exitSpring
                     : isBack && enteringBack
                     ? enterSpring
-                    : reduceMotion ? { duration: 0 } : springConfig
+                    : reduceMotion ? { duration: 0 } : baseTransition
                 }
                 onAnimationComplete={() => {
                   if (isTop && fadingTop) afterTopFade();
