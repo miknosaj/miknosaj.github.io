@@ -10,9 +10,44 @@ import winograndFamilyOfMan from '@/assets/content/modernism-photography/family-
 import winograndFamilyOfManFull from '@/assets/content/modernism-photography/family-of-man_winogrand-full.webp';
 import nanBw from '@/assets/content/modernism-photography/nan-bw.webp';
 import nanColor from '@/assets/content/modernism-photography/nan-color.webp';
+import bh1 from '@/assets/content/modernism-photography/bh-photos/bh1.png';
+import bh2 from '@/assets/content/modernism-photography/bh-photos/bh2.png';
+import bh3 from '@/assets/content/modernism-photography/bh-photos/bh3.png';
+import bh4 from '@/assets/content/modernism-photography/bh-photos/bh4.png';
+import bh5 from '@/assets/content/modernism-photography/bh-photos/bh5.png';
+import bh6 from '@/assets/content/modernism-photography/bh-photos/bh6.png';
+import bh7 from '@/assets/content/modernism-photography/bh-photos/bh7.png';
+import bh8 from '@/assets/content/modernism-photography/bh-photos/bh8.png';
+import bh9 from '@/assets/content/modernism-photography/bh-photos/bh9.png';
+import bh10 from '@/assets/content/modernism-photography/bh-photos/bh10.png';
+import bh11 from '@/assets/content/modernism-photography/bh-photos/bh11.png';
+import bh12 from '@/assets/content/modernism-photography/bh-photos/bh12.png';
+import bh13 from '@/assets/content/modernism-photography/bh-photos/bh13.png';
+import bh14 from '@/assets/content/modernism-photography/bh-photos/bh14.png';
+import bh16 from '@/assets/content/modernism-photography/bh-photos/bh16.png';
 import { withContentPage } from '../../components/withContentPage';
 import { imageDimensionsCache } from '@/shared/utils/imageDimensionsCache';
 import { LightSwitch } from '@/shared/ui/media/LightSwitch';
+import type { StackImage } from '@/shared/ui/media/InlineImageStack';
+import { InlineImageSpreadStack } from '@/shared/ui/media/InlineImageSpreadStack';
+
+const becherArchiveImages: StackImage[] = [
+  { src: bh1, alt: 'Becher contact sheet archive, folder 1' },
+  { src: bh2, alt: 'Becher contact sheet archive, folder 2' },
+  { src: bh3, alt: 'Becher contact sheet archive, folder 3' },
+  { src: bh4, alt: 'Becher contact sheet archive, folder 4' },
+  { src: bh5, alt: 'Becher contact sheet archive, folder 5' },
+  { src: bh6, alt: 'Becher contact sheet archive, folder 6' },
+  { src: bh7, alt: 'Becher contact sheet archive, folder 7' },
+  { src: bh8, alt: 'Becher contact sheet archive, folder 8' },
+  { src: bh9, alt: 'Becher contact sheet archive, folder 9' },
+  { src: bh10, alt: 'Becher contact sheet archive, folder 10' },
+  { src: bh11, alt: 'Becher contact sheet archive, folder 11' },
+  { src: bh12, alt: 'Becher contact sheet archive, folder 12' },
+  { src: bh13, alt: 'Becher contact sheet archive, folder 13' },
+  { src: bh14, alt: 'Becher contact sheet archive, folder 14' },
+  { src: bh16, alt: 'Becher contact sheet archive, folder 15' },
+];
 
 interface ModernismPhotographyPageProps {
   onNavigateToIndex: () => void;
@@ -31,7 +66,18 @@ function ModernismPhotographyContent(_: ModernismPhotographyPageProps) {
 
   // Preload critical images
   useEffect(() => {
-    imageDimensionsCache.preloadImages([photoOne, photoTwo, photoThree, photoFour, eggleston, winograndFamilyOfMan, winograndFamilyOfManFull, nanBw, nanColor]);
+    imageDimensionsCache.preloadImages([
+      photoOne,
+      photoTwo,
+      photoThree,
+      photoFour,
+      eggleston,
+      winograndFamilyOfMan,
+      winograndFamilyOfManFull,
+      nanBw,
+      nanColor,
+      ...becherArchiveImages.map((image) => image.src),
+    ]);
   }, []);
 
   useEffect(() => {
@@ -322,6 +368,13 @@ function ModernismPhotographyContent(_: ModernismPhotographyPageProps) {
             type: 'text',
             content:
               'At MoMA, the baton passed from Steichen to Szarkowski, who, in his “New Documents” exhibition, granted center stage to Winogrand, Arbus, and Friedlander. The new documentary did not prove or soothe. The photograph no longer finished the world’s story; it insisted that we dwell in the fragment, the question, the misleading frame. Galleries ceased to be houses of consensus and became spaces of provisional impressions, loose ends, and open possibility. The promise of photography shifted from unity to inquiry, and from that point forward, the world inside the picture frame looked less familiar and far more unsettling.',
+          },
+          {
+            type: 'imageSpreadStack',
+            images: becherArchiveImages,
+            caption: 'Bernd and Hilla Becher archive contact sheets',
+            rows: 3,
+            cols: 5,
           },
           {
             type: 'text',

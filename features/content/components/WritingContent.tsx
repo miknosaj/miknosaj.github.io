@@ -2,6 +2,7 @@ import { InlineImage } from '@/shared/ui/media/InlineImage';
 import { InlineImageWithMagnifier } from '@/shared/ui/media/InlineImageWithMagnifier';
 import { InlineVideo } from '@/shared/ui/media/InlineVideo';
 import { InlineImageStack } from '@/shared/ui/media/InlineImageStack';
+import { InlineImageSpreadStack } from '@/shared/ui/media/InlineImageSpreadStack';
 import { InlineImageThemeToggle } from '@/shared/ui/media/InlineImageThemeToggle';
 
 export type ContentBlock =
@@ -64,6 +65,14 @@ export type ContentBlock =
       stack: { src: string; alt: string; caption?: string }[];
       height?: number;
       mobileHeight?: number;
+    }
+  | {
+      type: 'imageSpreadStack';
+      images: { src: string; alt: string; caption?: string }[];
+      caption?: string;
+      rows?: number;
+      cols?: number;
+      gap?: number;
     };
 
 interface WritingContentProps {
@@ -222,6 +231,20 @@ export function WritingContent({ blocks }: WritingContentProps) {
               pageType="writing"
               height={block.height}
               mobileHeight={block.mobileHeight}
+            />
+          );
+        }
+
+        if (block.type === 'imageSpreadStack') {
+          return (
+            <InlineImageSpreadStack
+              key={`spread-stack-${index}`}
+              images={block.images}
+              pageType="writing"
+              caption={block.caption}
+              rows={block.rows}
+              cols={block.cols}
+              gap={block.gap}
             />
           );
         }
