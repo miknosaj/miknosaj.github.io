@@ -73,32 +73,6 @@ html.fonts-loaded body {
 
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #000000;
-    --foreground: #e5e5e5;
-
-    --primary: oklch(0.985 0 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.269 0 0);
-    --accent-foreground: oklch(0.985 0 0);
-
-    --border: oklch(0.269 0 0);
-    --ring: oklch(0.439 0 0);
-
-    /* Portfolio dark mode overrides */
-    --portfolio-primary: #6b8aff;
-    --portfolio-text: #e5e5e5;
-    --portfolio-muted: #a0a0a0;
-    --portfolio-border: #2a2a2a;
-    --portfolio-background-active: rgba(0, 0, 0, 0.8);
-  }
-}
-
 .dark {
   --background: #000000;
   --foreground: #e5e5e5;
