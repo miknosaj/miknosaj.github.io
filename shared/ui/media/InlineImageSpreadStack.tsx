@@ -53,6 +53,7 @@ export function InlineImageSpreadStack({
   gap,
 }: InlineImageSpreadStackProps) {
   const [isSpread, setIsSpread] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const [imageDimensions, setImageDimensions] = useState<Map<number, ImageDimensions>>(new Map());
   const [isSmallScreen, setIsSmallScreen] = useState(() => {
     if (typeof window === 'undefined') {
@@ -130,17 +131,24 @@ export function InlineImageSpreadStack({
   const baseCardWidth = isSmallScreen ? 120 : 160;
   const cardWidth = baseCardWidth;
   const cardHeight = cardWidth / clampedAspect;
-  const horizontalGap = gap ?? (isSmallScreen ? 14 : 20);
-  const verticalGap = gap ?? (isSmallScreen ? 12 : 16);
+  const baseHorizontalGap = gap ?? (isSmallScreen ? 14 : 20);
+  const baseVerticalGap = gap ?? (isSmallScreen ? 12 : 16);
   const colCount = Math.min(cols ?? (isSmallScreen ? 3 : 5), images.length);
   const rowCount = rows ?? Math.ceil(images.length / colCount);
-  const gridWidth = colCount * cardWidth + (colCount - 1) * horizontalGap;
-  const gridHeight = rowCount * cardHeight + (rowCount - 1) * verticalGap;
-  const stackHeight = cardHeight * (isSmallScreen ? 2.2 : 2.4);
+
+  // Use average card height for grid calculations to prevent jumping
+  const avgCardHeight = cardHeight;
+  const gridWidth = colCount * cardWidth + (colCount - 1) * baseHorizontalGap;
+  const gridHeight = rowCount * avgCardHeight + (rowCount - 1) * baseVerticalGap;
+  const stackHeight = avgCardHeight * (isSmallScreen ? 2.2 : 2.4);
   const containerHeight = isSpread ? gridHeight + 40 : stackHeight;
   const stackMaxWidth = Math.max(cardWidth * 2.6, 420);
-  const expandedMaxWidth = Math.min(gridWidth + horizontalGap * 2, isSmallScreen ? 460 : gridWidth + horizontalGap * 2 + 40);
+  const expandedMaxWidth = Math.min(gridWidth + baseHorizontalGap * 2, isSmallScreen ? 460 : gridWidth + baseHorizontalGap * 2 + 40);
   const containerMaxWidth = isSpread ? expandedMaxWidth : stackMaxWidth;
+
+  // Reduce gap on hover in expanded state
+  const horizontalGap = isSpread && isHovered ? baseHorizontalGap * 0.7 : baseHorizontalGap;
+  const verticalGap = isSpread && isHovered ? baseVerticalGap * 0.7 : baseVerticalGap;
 
   const baseTransforms = useMemo(() => {
     // Seeded random for consistent but messy scattered appearance
@@ -179,10 +187,18 @@ export function InlineImageSpreadStack({
       const jitterX = (seededRandom(idx * 13.6) - 0.5) * 30;
       const jitterY = (seededRandom(idx * 17.8) - 0.5) * 25;
 
+      // Hover shift - subtle movement on hover
+      const hoverShiftX = (seededRandom(idx * 21.3) - 0.5) * 12;
+      const hoverShiftY = (seededRandom(idx * 24.7) - 0.5) * 10;
+      const hoverRotation = (seededRandom(idx * 18.4) - 0.5) * 4;
+
       return {
         angle,
         x: baseX + jitterX,
-        y: baseY + jitterY
+        y: baseY + jitterY,
+        hoverShiftX,
+        hoverShiftY,
+        hoverRotation,
       };
     });
   }, [images.length]);
@@ -230,24 +246,37 @@ export function InlineImageSpreadStack({
     : "mt-16 md:mt-8";
 
   return (
-    <div className={containerPadding} style={{ marginBottom: `${bottomPaddingPx}px` }}>
+    <div
+      className={containerPadding}
+      style={{ marginBottom: `${bottomPaddingPx}px` }}
+      role="button"
+      tabIndex={0}
+      aria-pressed={isSpread}
+      aria-label={isSpread ? 'Collapse contact sheet grid' : 'Expand contact sheet grid'}
+      onClick={handleToggle}
+      onKeyDown={handleKeyDown}
+    >
+      {/* Full-width hover capture layer */}
       <motion.div
-        role="button"
-        tabIndex={0}
-        aria-pressed={isSpread}
-        aria-label={isSpread ? 'Collapse contact sheet grid' : 'Expand contact sheet grid'}
-        className="relative mx-auto flex w-full cursor-pointer items-center justify-center outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-black/60"
+        className="relative w-full"
         style={{
-          '--stack-border-thickness': isSpread ? '6px' : '8px',
           marginTop: isSpread ? (isSmallScreen ? '2rem' : '2.5rem') : (isSmallScreen ? '2rem' : '3rem'),
-        } as CSSProperties}
-        animate={{ height: containerHeight, maxWidth: containerMaxWidth }}
+        }}
+        animate={{ minHeight: containerHeight }}
         transition={containerSpring}
-        onClick={handleToggle}
-        onKeyDown={handleKeyDown}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
-        <div className="relative h-full w-full">
-          {images.map((img, index) => {
+        <motion.div
+          className="relative mx-auto cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-black/60"
+          style={{
+            '--stack-border-thickness': isSpread ? '6px' : '8px',
+          } as CSSProperties}
+          animate={{ height: containerHeight, maxWidth: containerMaxWidth }}
+          transition={containerSpring}
+        >
+          <div className="relative h-full w-full">
+            {images.map((img, index) => {
             const transform = baseTransforms[index] ?? { angle: 0, x: 0, y: 0 };
             const effectiveIndex = index;
             const col = effectiveIndex % colCount;
@@ -260,6 +289,11 @@ export function InlineImageSpreadStack({
 
             const gridX = (col - (colCount - 1) / 2) * (cardWidth + horizontalGap);
             const gridY = (row - (rowCount - 1) / 2) * (individualHeight + verticalGap);
+
+            // Apply hover shift only in collapsed state
+            const hoverShiftX = !isSpread && isHovered ? (transform.hoverShiftX || 0) : 0;
+            const hoverShiftY = !isSpread && isHovered ? (transform.hoverShiftY || 0) : 0;
+            const hoverRotation = !isSpread && isHovered ? (transform.hoverRotation || 0) : 0;
 
             return (
               <motion.div
@@ -280,9 +314,9 @@ export function InlineImageSpreadStack({
                   scale: 1.3,
                 }}
                 animate={{
-                  x: isSpread ? gridX : transform.x,
-                  y: isSpread ? gridY : transform.y,
-                  rotate: isSpread ? 0 : transform.angle,
+                  x: isSpread ? gridX : transform.x + hoverShiftX,
+                  y: isSpread ? gridY : transform.y + hoverShiftY,
+                  rotate: isSpread ? 0 : transform.angle + hoverRotation,
                   scale: isSpread ? 0.9 : 1.3,
                 }}
                 transition={cardSpring}
@@ -290,8 +324,9 @@ export function InlineImageSpreadStack({
                 <ContactSheetCard src={img.src} alt={img.alt} />
               </motion.div>
             );
-          })}
-        </div>
+            })}
+          </div>
+        </motion.div>
       </motion.div>
       {caption && (
         <motion.figcaption
