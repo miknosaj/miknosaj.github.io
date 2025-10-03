@@ -133,6 +133,7 @@ html.fonts-loaded body {
     background-color: var(--background);
     min-height: 100vh;
     min-height: -webkit-fill-available;
+    transition: background-color 0.3s ease;
   }
 
   body {
