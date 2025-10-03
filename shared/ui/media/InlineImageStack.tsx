@@ -168,6 +168,14 @@ export function InlineImageStack({
     setMovingUp(true);
     // Start fading partway through the upward movement
     setTimeout(() => setFadingTop(true), animDuration * 400);
+
+    // Reset hover state on tap to restart the auto-spread timer
+    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+    if (isTouchDevice) {
+      setHovered(false);
+      // Re-trigger hover on next tick to restart timer
+      setTimeout(() => setHovered(true), 0);
+    }
   };
   const afterFade = () => {
     setOrder(([first, ...rest]) => [...rest, first]);
