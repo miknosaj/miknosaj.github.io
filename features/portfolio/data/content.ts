@@ -132,7 +132,6 @@ export const portfolioContent: PortfolioContent = {
     sectionTitle: 'Personal',
     items: [
       { key: 'local-minima', label: 'Local Minima', isClickable: true, status: 'published' },
-      { key: 'productivity-ai', label: 'Productivity in the age of AI', isClickable: true, status: 'published' },
       { key: 'modernism-photography', label: "Photography's Modernism", isClickable: true, status: 'wip' },
     ],
   },
