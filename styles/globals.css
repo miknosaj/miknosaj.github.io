@@ -219,11 +219,23 @@ body {
   padding-bottom: 2.5rem;
 }
 
+.portfolio-container.portfolio-container--full {
+  max-width: none;
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+}
+
 @media (min-width: 768px) {
   .portfolio-container {
     padding-top: 5rem;
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+
+  .portfolio-container.portfolio-container--full {
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 

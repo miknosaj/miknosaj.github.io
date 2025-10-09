@@ -8,6 +8,7 @@ export interface PageConfig {
   subtitle?: string;
   description?: string;
   componentPath: string;
+  fullWidth?: boolean;
 }
 
 export const pageRegistry = {

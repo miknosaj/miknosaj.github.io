@@ -9,6 +9,7 @@ interface ContentPageProps {
   slug: string;
   onNavigateToIndex: () => void;
   children?: ReactNode;
+  fullWidth?: boolean;
 }
 
 type HeadElementConfig = {
@@ -149,8 +150,46 @@ function useContentPageHead(title: string, description: string | undefined, slug
   }, [title, description, slug]);
 }
 
-export function ContentPage({ title, subtitle, description, slug, onNavigateToIndex, children }: ContentPageProps) {
+export function ContentPage({ title, subtitle, description, slug, onNavigateToIndex, children, fullWidth = false }: ContentPageProps) {
   useContentPageHead(title, description, slug);
+
+  if (fullWidth) {
+    return (
+      <PageTransition>
+        <div className="flex flex-col w-full overflow-visible content-page-container" style={{ maxWidth: '100vw' }}>
+          <div className="w-full mb-8 overflow-visible" style={{ maxWidth: '30rem', paddingLeft: '1.5rem', paddingRight: '1.5rem' }}>
+            <button
+              onClick={onNavigateToIndex}
+              className="portfolio-link content-page-back-button cursor-pointer transition-colors duration-300 focus-ring rounded-sm"
+              style={{
+                fontSize: 'var(--portfolio-font-size)',
+                lineHeight: 'var(--portfolio-line-height)',
+                fontFamily: 'var(--portfolio-font-family)',
+              }}
+            >
+              <span className="content-page-back-button__icon" aria-hidden="true">
+                <BackArrowIcon />
+              </span>
+              <span>Index</span>
+            </button>
+          </div>
+
+          <div className="w-full overflow-visible">
+            <div className="flex flex-col gap-6 overflow-visible">
+              <div className="flex flex-col gap-1 overflow-visible" style={{ maxWidth: '30rem', paddingLeft: '1.5rem', paddingRight: '1.5rem' }}>
+                <h1 className="portfolio-text halbfett" tabIndex={-1}>{title}</h1>
+                {subtitle && (
+                  <p className="portfolio-text--muted">{`${subtitle}, ${new Date().getFullYear()}`}</p>
+                )}
+              </div>
+
+              {children}
+            </div>
+          </div>
+        </div>
+      </PageTransition>
+    );
+  }
 
   return (
     <PageTransition>

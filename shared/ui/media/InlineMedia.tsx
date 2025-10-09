@@ -24,9 +24,9 @@ export function InlineMediaFrame({
   const getWidthClasses = () => {
     if (pageType === 'photography') {
       if (orientation === 'landscape') {
-        return 'w-full md:w-[120%] md:-ml-[10%]';
+        return 'w-full md:w-[120%] md:-translate-x-[10%]';
       }
-      return 'w-full md:w-[95%] md:-ml-[2.5%]';
+      return 'w-full md:w-[95%] md:mx-auto';
     }
     return 'w-full md:w-[115%] md:-ml-[7.5%]';
   };

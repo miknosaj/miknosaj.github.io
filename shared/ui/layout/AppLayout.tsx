@@ -5,23 +5,26 @@ interface AppLayoutProps {
   isIndexPage: boolean;
   hasActiveTrigger: boolean;
   onGlobalClick?: () => void;
+  fullWidth?: boolean;
 }
 
 export function AppLayout({
   isIndexPage,
   hasActiveTrigger,
   onGlobalClick,
+  fullWidth = false,
   children,
 }: PropsWithChildren<AppLayoutProps>) {
   const shouldDimBackground = isIndexPage && hasActiveTrigger;
 
+  const containerClassName = `min-h-screen flex overflow-visible ${
+    fullWidth ? 'justify-start' : 'justify-center'
+  } ${isIndexPage ? 'transition-all duration-300' : ''} ${
+    shouldDimBackground ? 'cursor-pointer portfolio-background-active' : ''
+  }`;
+
   return (
-    <div
-      className={`min-h-screen flex justify-center overflow-visible ${
-        isIndexPage ? 'transition-all duration-300' : ''
-      } ${shouldDimBackground ? 'cursor-pointer portfolio-background-active' : ''}`}
-      onClick={isIndexPage ? onGlobalClick : undefined}
-    >
+    <div className={containerClassName} onClick={isIndexPage ? onGlobalClick : undefined}>
       <ImagePreloader />
       {/* Skip link for keyboard users */}
       <a
@@ -31,7 +34,14 @@ export function AppLayout({
         Skip to content
       </a>
 
-      <main id="main-content" tabIndex={-1} className="portfolio-container overflow-visible">
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className={`portfolio-container overflow-visible ${
+          fullWidth ? 'portfolio-container--full' : ''
+        }`}
+        style={fullWidth ? { width: '100%' } : undefined}
+      >
         {children}
       </main>
     </div>

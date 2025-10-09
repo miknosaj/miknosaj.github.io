@@ -1,8 +1,8 @@
 import { Route, Routes, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Analytics } from '@vercel/analytics/react';
 import { Portfolio, usePortfolioState, getPortfolioContent, getBioSections } from '@/features/portfolio';
-import { PageFactory } from '@/features/content';
+import { PageFactory, getPageConfig } from '@/features/content';
 import { ErrorPage } from '@/shared/ui/feedback/ErrorPage';
 import { AppLayout } from '@/shared/ui/layout/AppLayout';
 import { PageTransition } from '@/shared/ui/layout/PageTransition';
@@ -53,6 +53,14 @@ export default function App() {
     const location = useLocation();
     const isIndexPage = location.pathname === '/' || location.pathname === '';
 
+    // Determine if current page needs full width
+    const isFullWidth = useMemo(() => {
+      if (isIndexPage) return false;
+      const slug = location.pathname.slice(1); // Remove leading slash
+      const pageConfig = getPageConfig(slug);
+      return pageConfig?.fullWidth ?? false;
+    }, [location.pathname, isIndexPage]);
+
     const handleNavigateToPage = (page: string) => {
       navigate(`/${page}`);
     };
@@ -77,6 +85,7 @@ export default function App() {
         isIndexPage={isIndexPage}
         hasActiveTrigger={portfolioState.hasAnyActiveTrigger}
         onGlobalClick={portfolioState.handleGlobalClick}
+        fullWidth={isFullWidth}
       >
         <Analytics />
         <Analytics route={location.pathname} path={`${location.pathname}${location.search}`} />

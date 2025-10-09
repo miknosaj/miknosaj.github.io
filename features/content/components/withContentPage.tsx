@@ -17,6 +17,7 @@ export function withContentPage<P extends WithContentPageProps>(Inner: Component
         description={pageConfig.description}
         slug={pageConfig.slug}
         onNavigateToIndex={onNavigateToIndex}
+        fullWidth={pageConfig.fullWidth}
       >
         <Inner {...props} />
       </ContentPage>
